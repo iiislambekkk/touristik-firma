@@ -20,6 +20,7 @@ const BooksPage = () => {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mode, setMode] = useState(Mode.Create);
+    const [role, setRole] = useState('')
 
     const handleCreateBook = async (request: PostRequest) => {
         await createBook(request);
@@ -68,11 +69,19 @@ const BooksPage = () => {
         }
 
         getBooks();
+
+        let a = "";
+
+        if (localStorage.getItem("role") == "Admin") {
+            setRole("Admin")
+        }
+
+
     }, [])
 
     return (
         <div>
-            {localStorage.getItem("role") === "Admin" ? <Button
+            { role === "Admin" ? <Button
                     style={{marginTop: "20px"}}
                     onClick={openModal}
                 >
