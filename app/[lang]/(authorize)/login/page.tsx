@@ -4,8 +4,10 @@ import React, {useState} from 'react';
 import {AutoComplete, Form, message} from "antd";
 import Input from "antd/es/input/Input";
 import Button from "antd/es/button/button";
-import './../authorize.css';
+import '../authorize.css';
 import {LoginRequest, loginUser} from "@/src/services/auth";
+import * as dictionary from '../authDictionary.json';
+import Loader from "@/src/components/Loader/Loader";
 
 
 type FieldType = {
@@ -16,11 +18,16 @@ type FieldType = {
 
 
 
-const LoginPage = () => {
+const LoginPage = ({params}: {params: {lang: string}}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    let dict: any = dictionary;
+    const authDict = dict?.[params.lang];
 
     async function loginHandler() {
+        setLoading(true);
 
         const loginRequest = {
             email: email,
@@ -32,17 +39,19 @@ const LoginPage = () => {
         if (rez.status == 200) {
             message.success("Кіру жүзеге асты!")
 
-            let obj = JSON.parse(await rez.text())
+            let user = JSON.parse(await rez.text())
 
-            localStorage.setItem("token", obj.token);
-            localStorage.setItem("role", obj.role);
-
+            localStorage.setItem("token", user.token);
+            localStorage.setItem("role", user.role);
+            localStorage.setItem("userName", user.userName);
+            localStorage.setItem("userId", user.userId);
+            localStorage.setItem("isAuth", 'true');
         }
         else {
             message.error("Кіру жүзеге аспады!")
         }
 
-
+        setLoading(false);
     }
 
     return (
@@ -54,8 +63,9 @@ const LoginPage = () => {
             className={"form"}
             autoComplete="off"
         >
+            {loading ?<Loader imgUrl={"https://i.postimg.cc/4NHLY5gW/1699607160-news-b-1.jpg"} message={"Don't сасқалақтау. Загружаю"}/> : <></>}
             <Form.Item<FieldType>
-                label="Email"
+                label={authDict.email}
                 name="email"
                 rules={[{ required: true, message: 'Please input your Email!' }]}
             >
@@ -63,7 +73,7 @@ const LoginPage = () => {
             </Form.Item>
 
             <Form.Item<FieldType>
-                label="Password"
+                label={authDict.password}
                 name="password"
                 rules={[{ required: true, message: 'Please input your password!' }]}
             >
@@ -74,7 +84,7 @@ const LoginPage = () => {
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button onClick={loginHandler} type="primary" htmlType="button">
-                    Submit
+                    {authDict.submit}
                 </Button>
             </Form.Item>
         </Form>

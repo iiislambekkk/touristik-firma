@@ -6,6 +6,7 @@ import {PostRequest, createBook, deleteBook, getAllBooks, updateBook} from "@/sr
 import Posts from "@/src/components/Posts";
 import Title from "antd/es/typography/Title";
 import CreateUpdateBook, {Mode} from "@/src/components/CreateUpdateBook";
+import Loader from "@/src/components/Loader/Loader";
 
 const BooksPage = () => {
     const defaultValues = {
@@ -98,10 +99,10 @@ const BooksPage = () => {
                 handleCancel={closeModal}
             />
 
-            {loading ? <Title style={{marginTop: "20px"}}>Жүктелуде...</Title> : <Posts posts={posts}
+            {loading ?<Loader imgUrl={"https://i.postimg.cc/mrWt1Tvf/scale-1200-1-1.jpg"} message={"Don't сасқалақтау. Загружаю"}/> : <Posts posts={posts}
                                                           handleOpen={openEditModal} handleDelete={handleDeleteBook}
-            />}
 
+            />}
         </div>
     );
 };

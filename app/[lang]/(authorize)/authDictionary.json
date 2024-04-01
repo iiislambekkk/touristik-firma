@@ -1,0 +1,24 @@
+{
+
+  "en": {
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Submit"
+  },
+
+  "kz": {
+    "username": "Қолданушы аты",
+    "email": "Почта",
+    "password": "Құпия сөз",
+    "submit": "Растау"
+  },
+
+  "ru": {
+    "username": "Имя пользователя",
+    "email": "Почта",
+    "password": "Пароль",
+    "submit": "Подтвердить"
+  }
+
+}

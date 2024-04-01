@@ -1,0 +1,61 @@
+{
+  "en": {
+    "layout": {
+
+      "menu": {
+        "home": "Home",
+        "posts": "Posts",
+        "register": "Register",
+        "login": "Login",
+        "lightMode": "Light mode",
+        "darkMode": "Dark mode",
+        "language": "Language"
+      },
+
+      "footer": {
+        "poweredBy": "Powered by ASSkii Sotona"
+      }
+
+    }
+  },
+
+  "kz": {
+    "layout": {
+
+      "menu": {
+        "home": "Басты бет",
+        "posts": "Жазбалар",
+        "register": "Тіркелу",
+        "login": "Кіру",
+        "lightMode": "Эльфтердің режимі",
+        "darkMode": "Негрлер режимі",
+        "language": "Тіл"
+      },
+
+      "footer": {
+        "poweredBy": "Істеген АЦЦкий Сотона"
+      }
+
+    }
+  },
+
+  "ru": {
+    "layout": {
+
+      "menu": {
+        "home": "Главная",
+        "posts": "Посты",
+        "register": "Регистрация",
+        "login": "Войти",
+        "lightMode": "Эльфийский режим",
+        "darkMode": "Негрский режим",
+        "language": "Язык"
+      },
+
+      "footer": {
+        "poweredBy": "Сделано Аццкой Сотоной"
+      }
+
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import {Config} from '../../config';
+
 export interface RegisterRequest {
     email: string;
     password: string;
@@ -12,7 +14,7 @@ export interface LoginRequest {
 
 
 export const registerUser = async (registerRequest: RegisterRequest) => {
-    const rez = await fetch("https://turistikfirma.azurewebsites.net/api/Authorize/Register", {
+    const rez = await fetch(`${Config.serverAdress}api/Authorize/Register`, {
         method: "POST",
         headers: {
             "content-type": "application/json",
@@ -25,7 +27,7 @@ export const registerUser = async (registerRequest: RegisterRequest) => {
 }
 
 export const loginUser = async (loginRequest: LoginRequest) => {
-    const rez = await fetch("https://turistikfirma.azurewebsites.net/api/Authorize/SignIn", {
+    const rez = await fetch(`${Config.serverAdress}api/Authorize/SignIn`, {
         method: "POST",
         headers: {
             "content-type": "application/json",
