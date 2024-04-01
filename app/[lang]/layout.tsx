@@ -37,14 +37,14 @@ export default function RootLayout({
                 components: !darkMode ? themes.lightComponents : themes.DarkComponents,
             }}
         >
-            <Layout style={{minHeight: "100vh"}}>
+            <Layout style={{minHeight: "100vh", minWidth: "280px"}}>
                 <Header>
                     <div className={'drawerButton'}>
                         <MenuOutlined style={{paddingLeft: '10px',fontSize: 32, color: "white",
                             paddingTop: "16px"
                         }} onClick={() => setIsDrawerOpen(!isDrawerOpen)}/>
                     </div>
-                    <MyMenu themeHandler={themeHandler} lang={lang} isMobile={false}/>
+                    <MyMenu themeHandler={themeHandler} lang={lang} isMobile={false} setIsDrawerOpen={setIsDrawerOpen}/>
 
                     <Drawer
                         open={isDrawerOpen}
@@ -53,8 +53,9 @@ export default function RootLayout({
                         onClose={() => setIsDrawerOpen(!isDrawerOpen)}
                         placement={'left'}
                         className={'drawerMenu'}
+                        style={{maxWidth: "250px"}}
                     >
-                        <MyMenu themeHandler={themeHandler} lang={lang} isMobile={true}></MyMenu>
+                        <MyMenu themeHandler={themeHandler} lang={lang} isMobile={true} setIsDrawerOpen={setIsDrawerOpen}></MyMenu>
                     </Drawer>
                 </Header>
                 <Content style={{padding: "0 48px"}}>{children}</Content>

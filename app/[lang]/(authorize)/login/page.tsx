@@ -55,39 +55,43 @@ const LoginPage = ({params}: {params: {lang: string}}) => {
     }
 
     return (
-        <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
-            className={"form"}
-            autoComplete="off"
-        >
-            {loading ?<Loader imgUrl={"https://i.postimg.cc/4NHLY5gW/1699607160-news-b-1.jpg"} message={"Don't сасқалақтау. Загружаю"}/> : <></>}
-            <Form.Item<FieldType>
-                label={authDict.email}
-                name="email"
-                rules={[{ required: true, message: 'Please input your Email!' }]}
+        <>
+            {loading ? <Loader imgUrl={"/bishimbaev.jpg"} message={"Don't сасқалақтау.  Login делаю сені"}/> : <Form
+                name="basic"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 16 }}
+                initialValues={{ remember: true }}
+                className={"form"}
+                autoComplete="off"
             >
-                <Input value={email} onChange={(e) => setEmail(e.target.value)}/>
-            </Form.Item>
 
-            <Form.Item<FieldType>
-                label={authDict.password}
-                name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-                <Input value={password} onChange={(e) => setPassword(e.target.value)}/>
-            </Form.Item>
+                <Form.Item<FieldType>
+                    label={authDict.email}
+                    name="email"
+                    rules={[{ required: true, message: 'Please input your Email!' }]}
+                >
+                    <Input value={email} onChange={(e) => setEmail(e.target.value)}/>
+                </Form.Item>
+
+                <Form.Item<FieldType>
+                    label={authDict.password}
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your password!' }]}
+                >
+                    <Input value={password} onChange={(e) => setPassword(e.target.value)}/>
+                </Form.Item>
 
 
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button onClick={loginHandler} type="primary" htmlType="button">
-                    {authDict.submit}
-                </Button>
-            </Form.Item>
-        </Form>
+                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Button onClick={loginHandler} type="primary" htmlType="button">
+                        {authDict.submit}
+                    </Button>
+                </Form.Item>
+            </Form>
+            }
+        </>
+
 
     );
 };

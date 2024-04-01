@@ -8,7 +8,7 @@ import Image from 'next/image';
 import {Config} from "@/config";
 import {Console} from "inspector";
 
-const  MyMenu =  ({themeHandler, lang, isMobile}: {themeHandler: () => void, lang: string, isMobile: boolean}) => {
+const  MyMenu =  ({themeHandler, lang, isMobile, setIsDrawerOpen}: {themeHandler: () => void, lang: string, isMobile: boolean, setIsDrawerOpen: (isOpen: boolean) => void}) => {
 
     const router = useRouter();
 
@@ -17,7 +17,7 @@ const  MyMenu =  ({themeHandler, lang, isMobile}: {themeHandler: () => void, lan
 
 
     const items = [
-        {key: "home",label: <Link href={`/${lang}`}>{menu.home}</Link>},
+        {key: "home",label: <Link  href={`/${lang}`}>{menu.home}</Link>},
         {key: "posts", label: <Link href={`/${lang}/posts`}>{menu.posts}</Link>},
         {key: "Theme", label: <Switch onChange={themeHandler} checkedChildren={menu.lightMode} unCheckedChildren={menu.darkMode} />},
         {key: "register", label: <Link href={`/${lang}/register`}>{menu.register}</Link>},
@@ -79,6 +79,7 @@ const  MyMenu =  ({themeHandler, lang, isMobile}: {themeHandler: () => void, lan
 
     if (isMobile) {
         return <Menu
+            style={{marginLeft: "-20px"}}
             mode="inline"
             items={items}
         />
@@ -87,8 +88,8 @@ const  MyMenu =  ({themeHandler, lang, isMobile}: {themeHandler: () => void, lan
         return (
             <nav className="headerMenuu">
                 <div className="logo">
-                    <img
-                        src={'https://svgur.com/i/14vv.svg'}
+                    <Image
+                        src={'/logo.svg'}
                         width={90}
                         height={60}
                         alt="Pic"/>

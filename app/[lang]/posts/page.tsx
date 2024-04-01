@@ -99,7 +99,7 @@ const BooksPage = () => {
                 handleCancel={closeModal}
             />
 
-            {loading ?<Loader imgUrl={"https://i.postimg.cc/mrWt1Tvf/scale-1200-1-1.jpg"} message={"Don't сасқалақтау. Загружаю"}/> : <Posts posts={posts}
+            {loading ?<Loader imgUrl={"/bredPitt.jpeg"} message={"Don't сасқалақтау. Загружаю"}/> : <Posts posts={posts}
                                                           handleOpen={openEditModal} handleDelete={handleDeleteBook}
 
             />}
