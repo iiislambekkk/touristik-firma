@@ -14,7 +14,7 @@ main {
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     width: 100%;
     padding-top: 30px;
     gap: 30px 20px;
@@ -37,6 +37,21 @@ main {
     .cards {
         grid-template-columns: repeat(1, 1fr);
     }
+}
+
+.card {
+    overflow: hidden;
+    position: relative;
+}
+
+.card__image{
+    opacity: 0.4;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
 }
 
 .card__price{
@@ -65,11 +80,6 @@ main {
 }
 
 
-@media (max-width: 900px) {
-    .headerMenuu {
-        display: none !important;
-    }
-}
 
 @media (max-width: 900px) {
     .drawerButton {
@@ -83,35 +93,3 @@ main {
 
 
 
-.headerLeftMenu {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.headerRightMenu {
-    display: flex;
-    justify-content: flex-end;
-}
-
-
-.headerMenuu {
-    display: flex;
-    justify-content: space-around;
-}
-
-.logo {
-    padding-right: 50px;
-}
-
-.avatar {
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    background-size: cover;
-    background-position: top center;
-    border: 1px solid white;
-}
-
-.avatarWrapper {
-    padding-top: 8px;
-}

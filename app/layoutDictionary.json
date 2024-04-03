@@ -4,7 +4,7 @@
 
       "menu": {
         "home": "Home",
-        "posts": "Posts",
+        "tours": "Tours",
         "register": "Register",
         "login": "Login",
         "lightMode": "Light mode",
@@ -24,7 +24,7 @@
 
       "menu": {
         "home": "Басты бет",
-        "posts": "Жазбалар",
+        "tours": "Турлар",
         "register": "Тіркелу",
         "login": "Кіру",
         "lightMode": "Эльфтердің режимі",
@@ -44,7 +44,7 @@
 
       "menu": {
         "home": "Главная",
-        "posts": "Посты",
+        "tours": "Туры",
         "register": "Регистрация",
         "login": "Войти",
         "lightMode": "Эльфийский режим",

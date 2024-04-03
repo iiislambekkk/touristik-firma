@@ -17,6 +17,8 @@ export const themes = {
         Menu: {
             itemBg: "#075985",
             colorText: "#ffffff",
+            itemHeight: 60,
+            subMenuItemBg: 'rgba(0,0,0,0.37)'
         },
         Layout: {
             headerBg: "#075985",
@@ -42,6 +44,8 @@ export const themes = {
         },
         Menu: {
             itemBg: "#051025",
+            itemHeight: 60,
+            subMenuItemBg: 'rgba(0,0,0,0.37)'
         },
         Button: {
             defaultBg: "#313c4b",

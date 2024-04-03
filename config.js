@@ -1,5 +1,5 @@
 const config = {
-  "serverAdress": "https://turistikfirma.azurewebsites.net/",
+  "serverAdress": "https://localhost:7118/",
   "devAdress": "https://localhost:7118/",
   "prodAdress": "https://turistikfirma.azurewebsites.net/"
 }

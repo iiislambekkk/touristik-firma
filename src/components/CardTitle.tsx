@@ -1,4 +1,7 @@
 import styles from "./CardTitle.module.css"
+import { Typography } from 'antd';
+
+const { Text} = Typography;
 
 interface Props {
     title: string;
@@ -8,8 +11,8 @@ interface Props {
 const CardTitle = ({title, price} : Props) => {
     return (
         <div className={styles.cardTitle}>
-            <p className="card__title">{title}</p>
-            <p className="card__price">{price}</p>
+            <Text className="card__title">{title}</Text>
+            <Text className="card__price">{price} ₸</Text>
         </div>
     );
 };

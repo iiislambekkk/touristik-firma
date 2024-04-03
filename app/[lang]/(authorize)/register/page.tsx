@@ -8,7 +8,7 @@ import '../authorize.css';
 import {RegisterRequest, registerUser} from "@/src/services/auth";
 import * as dictionary from '../authDictionary.json';
 import Loader from "@/src/components/Loader/Loader";
-import Posts from "@/src/components/Posts";
+import Tours from "@/src/components/Tours";
 
 
 type FieldType = {
@@ -22,7 +22,7 @@ type FieldType = {
 const RegisterPage = ({params}: {params: {lang: string}}) => {
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
 
     let dict: any = dictionary;
@@ -51,50 +51,50 @@ const RegisterPage = ({params}: {params: {lang: string}}) => {
 
     return (
         <>
-            {loading ?<Loader imgUrl={"/bishimbaev.jpg"} message={"Don't сасқалақтау. Register делаю сені"}/> :
-                <Form
-                    name="basic"
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
-                    initialValues={{ remember: true }}
-                    className={"form"}
-                    autoComplete="off"
+            <Form
+                name="basic"
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 16 }}
+                initialValues={{ remember: true }}
+                className={"form"}
+                autoComplete="on"
+            >
+
+                <Form.Item<FieldType>
+                    className={"formItems"}
+                    label={authDict.username}
+                    name="username"
+                    rules={[{ required: true, message: 'Please input your username!' }]}
                 >
+                    <Input value={userName} onChange={(e) => setUserName(e.target.value)} />
+                </Form.Item>
 
-                    <Form.Item<FieldType>
-                        className={"formItems"}
-                        label={authDict.username}
-                        name="username"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
-                    >
-                        <Input value={userName} onChange={(e) => setUserName(e.target.value)} />
-                    </Form.Item>
+                <Form.Item<FieldType>
+                    label={authDict.email}
+                    name="email"
+                    rules={[{ required: true, message: 'Please input your Email!' }]}
+                >
+                    <Input value={userName} onChange={(e) => setEmail(e.target.value)}/>
+                </Form.Item>
 
-                    <Form.Item<FieldType>
-                        label={authDict.email}
-                        name="email"
-                        rules={[{ required: true, message: 'Please input your Email!' }]}
-                    >
-                        <Input value={userName} onChange={(e) => setEmail(e.target.value)}/>
-                    </Form.Item>
-
-                    <Form.Item<FieldType>
-                        label={authDict.password}
-                        name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
-                    >
-                        <Input value={userName} onChange={(e) => setPassword(e.target.value)}/>
-                    </Form.Item>
+                <Form.Item<FieldType>
+                    label={authDict.password}
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your password!' }]}
+                >
+                    <Input value={userName} onChange={(e) => setPassword(e.target.value)}/>
+                </Form.Item>
 
 
 
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button onClick={registerHandler} type="primary" htmlType="button">
-                            {authDict.submit}
-                        </Button>
-                    </Form.Item>
-                </Form>
-            }
+                <Form.Item style={{margin: "0 auto"}}>
+                    <Button onClick={registerHandler} type="primary" htmlType="button">
+                        {authDict.submit}
+                    </Button>
+                </Form.Item>
+            </Form>
+
+            {isLoading ? <Loader imgUrl={"/bishimbaev.jpg"} message={"Don't саске. Register сені делаю"}/> : <></>}
         </>
     );
 };

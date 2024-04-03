@@ -1,0 +1,44 @@
+@media (max-width: 900px) {
+    .headerMenuu {
+        display: none !important;
+    }
+}
+
+
+.headerLeftMenu {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.headerRightMenu {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.headerMenuu {
+    display: flex;
+    justify-content: space-around;
+}
+
+.logo {
+    padding-right: 50px;
+}
+
+.ant-menu-sub {
+    margin-top: 10px !important;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    background-size: cover;
+    background-position: top center;
+    border: 1px solid white;
+}
+
+.avatarWrapper {
+    padding-top: 8px;
+}
+

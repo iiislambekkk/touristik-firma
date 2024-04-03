@@ -2,24 +2,31 @@
 
 import {Menu, Select, Switch} from "antd";
 import Link from "next/link";
-import * as dictionary from '../../app/layoutDictionary.json';
+import * as dictionary from '../../../app/layoutDictionary.json';
 import {useRouter} from "next/navigation";
 import Image from 'next/image';
 import {Config} from "@/config";
 import {Console} from "inspector";
+import {appStore} from "@/src/store/appStore";
+import {observer} from "mobx-react-lite";
+import {useEffect} from "react";
+import "./MyMenu.css";
 
-const  MyMenu =  ({themeHandler, lang, isMobile, setIsDrawerOpen}: {themeHandler: () => void, lang: string, isMobile: boolean, setIsDrawerOpen: (isOpen: boolean) => void}) => {
+const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {themeHandler: () => void, lang: string, isMobile: boolean, setIsDrawerOpen: (isOpen: boolean) => void}) => {
 
     const router = useRouter();
 
     let dict: any = dictionary;
     let menu = dict[lang]?.layout.menu;
 
+    useEffect(() => {
+        if (localStorage.getItem('isAuth') === "true") appStore.setAuth(true);
+    }, [])
 
     const items = [
-        {key: "home",label: <Link  href={`/${lang}`}>{menu.home}</Link>},
-        {key: "posts", label: <Link href={`/${lang}/posts`}>{menu.posts}</Link>},
-        {key: "Theme", label: <Switch onChange={themeHandler} checkedChildren={menu.lightMode} unCheckedChildren={menu.darkMode} />},
+        {key: "home",label: <Link  href={`/${lang}`}>{menu?.home}</Link>},
+        {key: "tours", label: <Link href={`/${lang}/tours`}>{menu.tours}</Link>},
+        {key: "Theme", label: <Switch checked={localStorage.getItem("isDarkMode") === "true"} onChange={themeHandler} checkedChildren={menu.lightMode} unCheckedChildren={menu.darkMode} />},
         {key: "register", label: <Link href={`/${lang}/register`}>{menu.register}</Link>},
         {key: "login", label: <Link href={`/${lang}/login`}>{menu.login}</Link>},
         {key: "lang", label:
@@ -35,22 +42,23 @@ const  MyMenu =  ({themeHandler, lang, isMobile, setIsDrawerOpen}: {themeHandler
         {key: "profile", label:
             <>
                 {
-                    localStorage.hasOwnProperty("userId") ? <div className={'avatarWrapper'}>
+                    appStore.isAuth ? <div className={'avatarWrapper'}>
                         <div className="avatar"
                              style={{backgroundImage: `url('${Config.serverAdress}avatars/${localStorage.getItem('userId')}.png')`}}></div>
                     </div> : <></>
                 }
-            </>
+            </>,
+            children: [{key: "edit", label: <Link href={{ pathname: `/${lang}/profile`, query: { edit: 'true' } }}>Edit Profile</Link>}]
             }
     ]
 
     const leftItems = [
         {key: "home", label: <Link href={`/${lang}`}>{menu.home}</Link>},
-        {key: "posts", label: <Link href={`/${lang}/posts`}>{menu.posts}</Link>},
+        {key: "tours", label: <Link href={`/${lang}/tours`}>{menu.tours}</Link>},
     ]
 
     const rightItems = [
-        {key: "Theme", label: <Switch onChange={themeHandler} checkedChildren={menu.lightMode} unCheckedChildren={menu.darkMode} />},
+        {key: "Theme", label: <Switch onChange={themeHandler} checked={localStorage.getItem("isDarkMode") === "true"} checkedChildren={menu.lightMode} unCheckedChildren={menu.darkMode} />},
         {key: "register", label: <Link href={`/${lang}/register`}>{menu.register}</Link>},
         {key: "login", label: <Link href={`/${lang}/login`}>{menu.login}</Link>},
         {key: "lang", label:
@@ -65,8 +73,9 @@ const  MyMenu =  ({themeHandler, lang, isMobile, setIsDrawerOpen}: {themeHandler
                 />},
         {key: "profile", label:
                 <div className={'avatarWrapper'}>
-                    {localStorage.getItem("userId") != null ? <div className="avatar" style={{backgroundImage: `url('${Config.serverAdress}avatars/${localStorage.getItem('userId')}.png')`}}></div> : <></>}
-                </div>
+                    {appStore.isAuth ? <div className="avatar" style={{backgroundImage: `url('${Config.serverAdress}avatars/${localStorage.getItem('userId')}.png')`}}></div> : <></>}
+                </div>,
+            children: [{key: "edit", label: <Link href={{ pathname: `/${lang}/profile`, query: { edit: 'true' } }} style={{marginLeft: "100px"}}>Edit Profile</Link>}]
         }
     ]
 
@@ -88,9 +97,9 @@ const  MyMenu =  ({themeHandler, lang, isMobile, setIsDrawerOpen}: {themeHandler
         return (
             <nav className="headerMenuu">
                 <div className="logo">
-                    <Image
-                        src={'/logo.svg'}
-                        width={90}
+                    <img
+                        src={'/logo1.svg'}
+                        width={100}
                         height={60}
                         alt="Pic"/>
                 </div>
@@ -109,6 +118,6 @@ const  MyMenu =  ({themeHandler, lang, isMobile, setIsDrawerOpen}: {themeHandler
             </nav>
             )
     }
-};
+});
 
 export default MyMenu;

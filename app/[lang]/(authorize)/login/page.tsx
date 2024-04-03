@@ -8,7 +8,7 @@ import '../authorize.css';
 import {LoginRequest, loginUser} from "@/src/services/auth";
 import * as dictionary from '../authDictionary.json';
 import Loader from "@/src/components/Loader/Loader";
-
+import {appStore} from "@/src/store/appStore";
 
 type FieldType = {
     username?: string;
@@ -21,7 +21,7 @@ type FieldType = {
 const LoginPage = ({params}: {params: {lang: string}}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [isloading, setLoading] = useState(false);
 
     let dict: any = dictionary;
     const authDict = dict?.[params.lang];
@@ -52,13 +52,14 @@ const LoginPage = ({params}: {params: {lang: string}}) => {
         }
 
         setLoading(false);
+        appStore.setAuth(true)
     }
 
     return (
         <>
-            {loading ? <Loader imgUrl={"/bishimbaev.jpg"} message={"Don't сасқалақтау.  Login делаю сені"}/> : <Form
+            <Form
                 name="basic"
-                labelCol={{ span: 8 }}
+                labelCol={{ span: 4 }}
                 wrapperCol={{ span: 16 }}
                 initialValues={{ remember: true }}
                 className={"form"}
@@ -82,17 +83,16 @@ const LoginPage = ({params}: {params: {lang: string}}) => {
                 </Form.Item>
 
 
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Form.Item style={{margin: "0 auto"}}
+                >
                     <Button onClick={loginHandler} type="primary" htmlType="button">
                         {authDict.submit}
                     </Button>
                 </Form.Item>
             </Form>
-            }
+
+            {isloading ? <Loader imgUrl={"/bishimbaev.jpg"} message={"Don't саске. Login сені делаю"}/> : <></>}
         </>
-
-
     );
 };
 
