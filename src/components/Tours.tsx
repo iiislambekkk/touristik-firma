@@ -4,6 +4,7 @@ import Button from "antd/es/button/button";
 import { Typography } from 'antd';
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import {Config} from "@/config";
 
 const { Text, Paragraph } = Typography;
 
@@ -35,7 +36,7 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                     hoverable={true}
                     className={"card"}
                 >
-                    <img src="https://localhost:7118/posts/638477802582146959.jpeg" alt="" className="card__image"/>
+                    <img src={`${Config.serverAdress}posts/638477802582146959.jpeg`} alt="" className="card__image"/>
                     <Paragraph >{tour.descriptionEn.slice(0, 80)}</Paragraph >
                     <Paragraph >Country: {tour.country}</Paragraph >
                     {role === "Admin" ? <div className={"card__buttons"}>
@@ -66,7 +67,7 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                     hoverable={true}
                     className={"card"}
                 >
-                    <img src="https://localhost:7118/posts/638477802582146959.jpeg" alt="" className="card__image"/>
+                    <img src={`${Config.serverAdress}posts/638477802582146959.jpeg`} alt="" className="card__image"/>
                     <Paragraph >{tour.descriptionKz.slice(0, 80)}</Paragraph >
                     <Paragraph >Country: {tour.country}</Paragraph >
                     {role === "Admin" ? <div className={"card__buttons"}>
@@ -96,7 +97,7 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                     hoverable={true}
                     className={"card"}
                 >
-                    <img src="https://localhost:7118/posts/638477802582146959.jpeg" alt="" className="card__image"/>
+                    <img src={`${Config.serverAdress}posts/638477802582146959.jpeg`} alt="" className="card__image"/>
                     <Paragraph >{tour.descriptionRu.slice(0, 80)}</Paragraph >
                     <Paragraph >Country: {tour.country}</Paragraph >
                     {role === "Admin" ? <div className={"card__buttons"}>
