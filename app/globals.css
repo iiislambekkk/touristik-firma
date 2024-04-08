@@ -42,6 +42,7 @@ main {
 .card {
     overflow: hidden;
     position: relative;
+    min-height: 256px;
 }
 
 .card__image{
@@ -62,9 +63,12 @@ main {
 
 .card__buttons {
     display: flex;
+    position: absolute;
+    bottom: 16px;
     flex-direction: row;
-    gap: 15px;
+    gap: 16px;
     margin-top: 20px;
+    justify-content: space-around;
 }
 
 .post__modal {

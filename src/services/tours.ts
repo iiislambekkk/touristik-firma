@@ -1,6 +1,7 @@
 "use client";
 
 import {Config} from "@/config";
+import axios from "axios";
 
 export interface TourRequest {
     titleEn: string;
@@ -60,13 +61,14 @@ export const deleteTour = async (id: string) => {
 }
 
 export const uploadTourImg = async (f: FormData) => {
-    let res = await fetch(`${Config.serverAdress}api/tours/uploadImage`, {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-        },
-        body: JSON.stringify({file: f}),
-    });
 
-    return res.json();
+    let res = await axios.post(`${Config.serverAdress}api/tours/uploadImage`, f, {
+        headers: {
+            'accept': 'application/json',
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            'Content-Type': `text/plain; charset=utf-8;`,
+        }
+    })
+
+    return res;
 }

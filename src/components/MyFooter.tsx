@@ -5,10 +5,10 @@ import * as dictionary from '../../app/layoutDictionary.json';
 const MyFooter = ({lang}: {lang: string}) => {
 
     let dict: any = dictionary;
-    let footer = dict[lang].layout.footer;
+    let footer = dict[lang]?.layout.footer;
 
     return (
-        <Footer style={{textAlign: "center"}}>{footer.poweredBy}</Footer>
+        <Footer style={{textAlign: "center"}}>{footer?.poweredBy}</Footer>
     );
 };
 

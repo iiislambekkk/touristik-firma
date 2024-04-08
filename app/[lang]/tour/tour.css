@@ -1,0 +1,43 @@
+.tour {
+    padding-right: 36px;
+    padding-top: 24px;
+    padding-bottom: 16px;
+    padding-left: 36px;
+}
+
+.tour__header-image {
+    display: block;
+    width: 100%;
+    height: 36vh;
+    margin: 0 auto;
+    opacity: 0.6;
+}
+
+.tour__header {
+    position: relative;
+}
+
+.tour__header-text {
+    position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
+    top: 32%;
+    font-weight: bold;
+    font-size: 62px;
+}
+
+.tour__price {
+    padding-top: 12px;
+    font-size: 24px;
+}
+
+@media (max-width: 980px) {
+    .tour__header-text  {
+        font-size: 32px;
+    }
+
+    .tour__header-image {
+        width: 75vw;
+    }
+}

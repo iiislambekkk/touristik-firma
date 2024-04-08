@@ -11,7 +11,7 @@ interface Props {
 const CardTitle = ({title, price} : Props) => {
     return (
         <div className={styles.cardTitle}>
-            <Text className="card__title">{title}</Text>
+            <Text style={{fontStyle: "bold", zIndex:1}} className="card__title">{title}</Text>
             <Text className="card__price">{price} ₸</Text>
         </div>
     );

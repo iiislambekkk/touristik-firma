@@ -36,8 +36,8 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                     hoverable={true}
                     className={"card"}
                 >
-                    <img src={`${Config.serverAdress}posts/638477802582146959.jpeg`} alt="" className="card__image"/>
-                    <Paragraph >{tour.descriptionEn.slice(0, 80)}</Paragraph >
+                    <img src={`${Config.serverAdress}${tour.previewPhotoPath}`}alt="" className="card__image"/>
+                    <Paragraph  style={{zIndex:1}}>{tour.descriptionEn.slice(0, 80)}</Paragraph >
                     <Paragraph >Country: {tour.country}</Paragraph >
                     {role === "Admin" ? <div className={"card__buttons"}>
 
@@ -49,8 +49,11 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                                 style={{flex: 1}}>
                             Delete
                         </Button>
-                    </div> : <></>}
-                    <Button onClick={() => router.push("/en/tour?id=" + tour.id)}>More</Button>
+                        <Button style={{flex: 1}} onClick={() => router.push("/en/tour?id=" + tour.id)}>More</Button>
+                    </div> : <div className={"card__buttons"}>
+                        <Button style={{flex: 1}} onClick={() => router.push("/en/tour?id=" + tour.id)}>More</Button>
+                    </div>}
+
 
                 </Card>
                 ))}
@@ -67,7 +70,7 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                     hoverable={true}
                     className={"card"}
                 >
-                    <img src={`${Config.serverAdress}posts/638477802582146959.jpeg`} alt="" className="card__image"/>
+                    <img src={`${Config.serverAdress}${tour.previewPhotoPath}`} alt="" className="card__image"/>
                     <Paragraph >{tour.descriptionKz.slice(0, 80)}</Paragraph >
                     <Paragraph >Country: {tour.country}</Paragraph >
                     {role === "Admin" ? <div className={"card__buttons"}>
@@ -80,8 +83,11 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                                 style={{flex: 1}}>
                             Өшіру
                         </Button>
-                    </div> : <></>}
-                    <Button onClick={() => router.push("/kz/tour?id=" + tour.id)}>Толығырақ</Button>
+                        <Button onClick={() => router.push("/kz/tour?id=" + tour.id)}>Толығырақ</Button>
+                    </div> : <div className={"card__buttons"}>
+                        <Button onClick={() => router.push("/kz/tour?id=" + tour.id)}>Толығырақ</Button>
+                    </div>}
+
                 </Card>
             ))}
         </div>
@@ -97,7 +103,7 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                     hoverable={true}
                     className={"card"}
                 >
-                    <img src={`${Config.serverAdress}posts/638477802582146959.jpeg`} alt="" className="card__image"/>
+                    <img src={`${Config.serverAdress}${tour.previewPhotoPath}`} alt="" className="card__image"/>
                     <Paragraph >{tour.descriptionRu.slice(0, 80)}</Paragraph >
                     <Paragraph >Country: {tour.country}</Paragraph >
                     {role === "Admin" ? <div className={"card__buttons"}>
@@ -110,11 +116,14 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                                 style={{flex: 1}}>
                             Удалить
                         </Button>
-                    </div> : <></>}
 
-                    <div className="card__buttons" style={{display: "flex", justifyContent: "end"}}>
                         <Button onClick={() => router.push("/ru/tour?id=" + tour.id)}>Подробнее</Button>
-                    </div>
+                    </div> : <div className={"card__buttons"}>
+                        <Button onClick={() => router.push("/ru/tour?id=" + tour.id)}>Подробнее</Button>
+                    </div> }
+
+
+
 
                 </Card>
             ))}

@@ -48,7 +48,7 @@ const CreateUpdateTour = (
     }
 
     const uploadImg = async (file: FormData) => {
-        setPreviewPhotoPath(await uploadTourImg(file));
+        setPreviewPhotoPath((await uploadTourImg(file)).data);
     }
 
     useEffect(() => {
@@ -97,7 +97,7 @@ const CreateUpdateTour = (
                     type={"file"}
                     onChange={(e) => {
                             let f = new FormData;
-                            f.append('file', e.target.value)
+                            f.append('file', e.target.files[0])
                             uploadImg(f);
                         }
                     }
@@ -107,7 +107,7 @@ const CreateUpdateTour = (
                     value={descriptionEn}
                     onChange={(e) => setDescriptionEn(e.target.value)}
                     autoSize={{minRows: 3, maxRows: 3}}
-                    placeholder={"Мәтін"}
+                    placeholder={"Description"}
                 />
                 <TextArea
                     value={descriptionKz}
@@ -119,7 +119,7 @@ const CreateUpdateTour = (
                     value={descriptionRu}
                     onChange={(e) => setDescriptionRu(e.target.value)}
                     autoSize={{minRows: 3, maxRows: 3}}
-                    placeholder={"Мәтін"}
+                    placeholder={"Описание"}
                 />
                 <Input
                     value={country}
@@ -127,7 +127,7 @@ const CreateUpdateTour = (
                         setCountry(e.target.value)
                     }
                     }
-                    placeholder={"Введите название тура"}
+                    placeholder={"Елді таңданыз"}
                 />
                 <Input
                     value={price}

@@ -25,14 +25,14 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
 
     const items = [
         {key: "home",label: <Link  href={`/${lang}`}>{menu?.home}</Link>},
-        {key: "tours", label: <Link href={`/${lang}/tours`}>{menu.tours}</Link>},
-        {key: "Theme", label: <Switch checked={localStorage.getItem("isDarkMode") === "true"} onChange={themeHandler} checkedChildren={menu.lightMode} unCheckedChildren={menu.darkMode} />},
-        {key: "register", label: <Link href={`/${lang}/register`}>{menu.register}</Link>},
-        {key: "login", label: <Link href={`/${lang}/login`}>{menu.login}</Link>},
+        {key: "tours", label: <Link href={`/${lang}/tours`}>{menu?.tours}</Link>},
+        {key: "Theme", label: <Switch checked={localStorage.getItem("isDarkMode") === "true"} onChange={themeHandler} checkedChildren={menu?.lightMode} unCheckedChildren={menu?.darkMode} />},
+        {key: "register", label: <Link href={`/${lang}/register`}>{menu?.register}</Link>},
+        {key: "login", label: <Link href={`/${lang}/login`}>{menu?.login}</Link>},
         {key: "lang", label:
                 <Select
                     onChange={(value) => router.push(langHandler(value))}
-                    defaultValue={menu.language}
+                    defaultValue={menu?.language}
                     options={[
                         { value: 'kz', label: 'kz' },
                         { value: 'ru', label: 'ru' },
@@ -53,18 +53,18 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
     ]
 
     const leftItems = [
-        {key: "home", label: <Link href={`/${lang}`}>{menu.home}</Link>},
-        {key: "tours", label: <Link href={`/${lang}/tours`}>{menu.tours}</Link>},
+        {key: "home", label: <Link href={`/${lang}`}>{menu?.home}</Link>},
+        {key: "tours", label: <Link href={`/${lang}/tours`}>{menu?.tours}</Link>},
     ]
 
     const rightItems = [
-        {key: "Theme", label: <Switch onChange={themeHandler} checked={localStorage.getItem("isDarkMode") === "true"} checkedChildren={menu.lightMode} unCheckedChildren={menu.darkMode} />},
-        {key: "register", label: <Link href={`/${lang}/register`}>{menu.register}</Link>},
-        {key: "login", label: <Link href={`/${lang}/login`}>{menu.login}</Link>},
+        {key: "Theme", label: <Switch onChange={themeHandler} checked={localStorage.getItem("isDarkMode") === "true"} checkedChildren={menu?.lightMode} unCheckedChildren={menu?.darkMode} />},
+        {key: "register", label: <Link href={`/${lang}/register`}>{menu?.register}</Link>},
+        {key: "login", label: <Link href={`/${lang}/login`}>{menu?.login}</Link>},
         {key: "lang", label:
                 <Select
                     onChange={(value) => router.push(langHandler(value))}
-                    defaultValue={menu.language}
+                    defaultValue={menu?.language}
                     options={[
                         { value: 'kz', label: 'kz' },
                         { value: 'ru', label: 'ru' },
@@ -81,6 +81,12 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
 
     function langHandler(lang: string) {
         let path = '/' + lang + window.location.pathname.slice(3);
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        if (id != null) {
+            return path + "?id=" + id;
+        }
 
         return path;
     }
