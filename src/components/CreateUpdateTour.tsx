@@ -97,7 +97,9 @@ const CreateUpdateTour = (
                     type={"file"}
                     onChange={(e) => {
                             let f = new FormData;
-                            f.append('file', e.target.files[0])
+                            if (e.target.files != null) {
+                                f.append('file', e.target.files[0])
+                            }
                             uploadImg(f);
                         }
                     }
