@@ -1,0 +1,20 @@
+{
+
+  "en": {
+    "delete": "Delete",
+    "reply": "Reply",
+    "change": "Change"
+  },
+
+  "kz": {
+    "delete": "Жою",
+    "reply": "Жауап беру",
+    "change": "Өзгерту"
+  },
+
+  "ru": {
+    "delete": "Удалить",
+    "reply": "Ответить",
+    "change": "Изменить"
+  }
+}

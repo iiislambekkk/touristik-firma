@@ -9,4 +9,8 @@ interface Tour {
     price: number;
     previewPhotoPath: string;
     country: string;
+    daysEn: string;
+    daysKz: string;
+    daysRu: string;
+    numOfDays: number;
 }

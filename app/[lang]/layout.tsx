@@ -10,6 +10,8 @@ import {MenuOutlined} from "@ant-design/icons";
 import MyMenu from "@/src/components/MyMenu/MyMenu";
 import MyFooter from "@/src/components/MyFooter";
 import {appStore} from "@/src/store/appStore";
+import {getCurrentUser, getUserInformation} from "@/src/services/user";
+import {toJS} from "mobx";
 
 
 export default function RootLayout({
@@ -29,9 +31,22 @@ export default function RootLayout({
         localStorage.setItem("isDarkMode", "" + !darkMode);
     }
 
+    const getUser = async () => {
+        const currentUser = await getCurrentUser();
+        if (currentUser == "Error") return;
+
+        appStore.setUser(currentUser);
+        console.log(toJS(appStore.user).id)
+    }
+
     useEffect(() => {
         if (localStorage.getItem("isDarkMode") === "true") setdarkMode(true);
         else setdarkMode(false);
+
+        if (localStorage.hasOwnProperty("token")){
+            getUser()
+        }
+
     }, [lang])
     
     return (

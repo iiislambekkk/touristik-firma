@@ -1,0 +1,24 @@
+{
+
+  "en": {
+    "addTour": "Add Tour",
+    "redactTour": "Redact Tour",
+    "cancel": "Cancel",
+    "uploadImage": "Upload Image"
+  },
+
+  "kz": {
+    "addTour": "Тур қосу",
+    "redactTour": "Турды өзгерту",
+    "cancel": "Доғаур",
+    "uploadImage": "Сурет қосу"
+  },
+
+  "ru": {
+    "addTour": "Добавить тур",
+    "redactTour": "Редактировать тур",
+    "cancel": "Отмена",
+    "uploadImage": "Добавить изображение"
+  }
+
+}

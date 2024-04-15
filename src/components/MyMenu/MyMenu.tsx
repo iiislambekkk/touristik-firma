@@ -4,19 +4,18 @@ import {Menu, Select, Switch} from "antd";
 import Link from "next/link";
 import * as dictionary from '../../../app/layoutDictionary.json';
 import {useRouter} from "next/navigation";
-import Image from 'next/image';
 import {Config} from "@/config";
-import {Console} from "inspector";
 import {appStore} from "@/src/store/appStore";
 import {observer} from "mobx-react-lite";
 import {useEffect} from "react";
 import "./MyMenu.css";
+import {toJS} from "mobx";
 
 const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {themeHandler: () => void, lang: string, isMobile: boolean, setIsDrawerOpen: (isOpen: boolean) => void}) => {
 
     const router = useRouter();
 
-    let dict: any = dictionary;
+    let dict: LayoutDictionary = dictionary;
     let menu = dict[lang]?.layout.menu;
 
     useEffect(() => {
@@ -26,7 +25,7 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
     const items = [
         {key: "home",label: <Link  href={`/${lang}`}>{menu?.home}</Link>},
         {key: "tours", label: <Link href={`/${lang}/tours`}>{menu?.tours}</Link>},
-        {key: "Theme", label: <Switch checked={localStorage.getItem("isDarkMode") === "true"} onChange={themeHandler} checkedChildren={menu?.lightMode} unCheckedChildren={menu?.darkMode} />},
+        {key: "Theme", label: <Switch checked={localStorage?.getItem("isDarkMode") === "true"} onChange={themeHandler} checkedChildren={menu?.lightMode} unCheckedChildren={menu?.darkMode} />},
         {key: "register", label: <Link href={`/${lang}/register`}>{menu?.register}</Link>},
         {key: "login", label: <Link href={`/${lang}/login`}>{menu?.login}</Link>},
         {key: "lang", label:
@@ -73,7 +72,7 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
                 />},
         {key: "profile", label:
                 <div className={'avatarWrapper'}>
-                    {appStore.isAuth ? <div className="avatar" style={{backgroundImage: `url('${Config.serverAdress}avatars/${localStorage.getItem('userId')}.png')`}}></div> : <></>}
+                        {appStore.isAuth ? <div className="avatar" style={{backgroundImage: `url('${Config.serverAdress}avatars/${toJS(appStore.user).id}.jpg')`}}></div> : <></>}
                 </div>,
             children: [{key: "edit", label: <Link href={{ pathname: `/${lang}/profile`, query: { edit: 'true' } }} style={{marginLeft: "100px"}}>Edit Profile</Link>}]
         }

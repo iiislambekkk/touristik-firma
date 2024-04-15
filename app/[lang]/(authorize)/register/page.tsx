@@ -8,7 +8,6 @@ import '../authorize.css';
 import {RegisterRequest, registerUser} from "@/src/services/auth";
 import * as dictionary from '../authDictionary.json';
 import Loader from "@/src/components/Loader/Loader";
-import Tours from "@/src/components/Tours";
 
 
 type FieldType = {
@@ -25,7 +24,7 @@ const RegisterPage = ({params}: {params: {lang: string}}) => {
     const [isLoading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
 
-    let dict: any = dictionary;
+    let dict: Dictionary = dictionary;
     const authDict = dict[params.lang];
 
     async function registerHandler() {

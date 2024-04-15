@@ -11,7 +11,7 @@ const { Text, Paragraph } = Typography;
 interface Props {
     tours: Tour[],
     handleDelete: (id: string) => void;
-    handleOpen: (book: Tour) => void;
+    handleOpen: (tour: Tour) => void;
     lang: string;
 }
 

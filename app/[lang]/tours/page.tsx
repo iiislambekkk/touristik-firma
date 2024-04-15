@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {TourRequest, createTour, deleteTour, getAllTours, updateTour} from "@/src/services/tours";
 import Tours from "@/src/components/Tours";
 import Title from "antd/es/typography/Title";
-import CreateUpdateTour, {Mode} from "@/src/components/CreateUpdateTour";
+import CreateUpdateTour, {Mode} from "@/src/components/CreateUpdateTour/CreateUpdateTour";
 import Loader from "@/src/components/Loader/Loader";
 
 const ToursPage = ({params}: {params: {lang: string}}) => {
@@ -97,7 +97,7 @@ const ToursPage = ({params}: {params: {lang: string}}) => {
                     style={{marginTop: "20px"}}
                     onClick={openModal}
                 >
-                    Пост қосу
+                {lang == "en" ? "Add Tour" : lang == "kz" ? "Тур қосу" : "Добавить тур"}
                 </Button> : <></>}
 
 
@@ -108,6 +108,7 @@ const ToursPage = ({params}: {params: {lang: string}}) => {
                 handleUpdate={handleUpdateTour}
                 handleCreate={handleCreateTour}
                 handleCancel={closeModal}
+                lang={lang}
             />
 
             {loading ?<Loader imgUrl={"/bredPitt.jpeg"} message={"Don't сасқалақтау. Загружаю"}/> : <Tours lang={lang} tours={tours}

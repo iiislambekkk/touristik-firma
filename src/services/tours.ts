@@ -3,6 +3,13 @@
 import {Config} from "@/config";
 import axios from "axios";
 
+/*interface day {
+    [key: number]: {
+        header: string;
+        description: string;
+    }
+}*/
+
 export interface TourRequest {
     titleEn: string;
     titleKz: string;
@@ -13,6 +20,9 @@ export interface TourRequest {
     price: number;
     previewPhotoPath: string;
     country: string;
+    daysKz: string;
+    daysEn: string;
+    daysRu: string;
 }
 
 export const getOneTour = async (id: string) => {
@@ -40,14 +50,16 @@ export const createTour = async (tourRequest: TourRequest) => {
 }
 
 export const updateTour = async (id: string, tourRequest: TourRequest) => {
-    await fetch(`${Config.serverAdress}api/tours/${id}`, {
-        method: "PUT",
+
+    let res = await axios.put(`${Config.serverAdress}api/tours/${id}`, JSON.stringify(tourRequest), {
         headers: {
             "content-type": "application/json",
             "Authorization": "Bearer " + localStorage.getItem("token"),
-        },
-        body: JSON.stringify(tourRequest),
-    });
+        }
+    })
+
+    console.log(tourRequest.daysEn)
+    return res;
 }
 
 export const deleteTour = async (id: string) => {
@@ -60,6 +72,7 @@ export const deleteTour = async (id: string) => {
     });
 }
 
+/*
 export const uploadTourImg = async (f: FormData) => {
 
     let res = await axios.post(`${Config.serverAdress}api/tours/uploadImage`, f, {
@@ -71,4 +84,4 @@ export const uploadTourImg = async (f: FormData) => {
     })
 
     return res;
-}
+}*/

@@ -25,6 +25,11 @@ export const themes = {
             bodyBg: "#0284c7",
             footerBg: "#075985"
         },
+        Input: {
+            colorBgContainer: "rgba(6,87,129,0.34)",
+            colorText: "#FFFFFF",
+            colorTextPlaceholder: "rgba(255,255,255,0.69)"
+        }
 
     },
     dark: {

@@ -23,7 +23,7 @@ const LoginPage = ({params}: {params: {lang: string}}) => {
     const [password, setPassword] = useState('');
     const [isloading, setLoading] = useState(false);
 
-    let dict: any = dictionary;
+    let dict: Dictionary = dictionary;
     const authDict = dict?.[params.lang];
 
     async function loginHandler() {
@@ -46,6 +46,7 @@ const LoginPage = ({params}: {params: {lang: string}}) => {
             localStorage.setItem("userName", user.userName);
             localStorage.setItem("userId", user.userId);
             localStorage.setItem("isAuth", 'true');
+            appStore.setUserId(user.userId)
         }
         else {
             message.error("Кіру жүзеге аспады!")
