@@ -10,9 +10,10 @@ interface Props {
     lang: string;
     entityId: string;
     deleteCommentary: (id: string) => void;
+    getCommentaries: (id: string) => void;
 }
 
-const Comments = ({lang, comments, entityId, deleteCommentary}: Props) => {
+const Comments = ({lang, comments, entityId, deleteCommentary, getCommentaries}: Props) => {
 
     const [structuredComms, setStructuredComms] = useState([] as Comments[]);
 
@@ -46,7 +47,7 @@ const Comments = ({lang, comments, entityId, deleteCommentary}: Props) => {
     return (
     <div className={styles.comments}>
         {structuredComms.map((comment : Comments, index: number) => (
-            <Commentary deleteCommentary={deleteCommentary} key={index} comment={comment} lang={lang}/>
+            <Commentary getCommentaries={getCommentaries} deleteCommentary={deleteCommentary} key={index} comment={comment} lang={lang}/>
         ))}
     </div>
     )

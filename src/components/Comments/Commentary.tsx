@@ -6,27 +6,69 @@ import {getUserInformation} from "@/src/services/user";
 import {Config} from "@/config";
 import {appStore} from "@/src/store/appStore";
 import * as dictionary from "./commentaryDict.json"
+import {toJS} from "mobx";
+import {CommentRequest, createComment, deleteComment, updateComment} from "@/src/services/comments";
+import commstyles from "@/src/components/Comments/Comments.module.css";
+import TextArea from "antd/es/input/TextArea";
 
 interface Props {
     comment: Comments,
     lang: string,
     deleteCommentary: (id: string) => void;
+    getCommentaries: (id: string) => void;
 }
 
 
 
-const Commentary = ({lang, comment, deleteCommentary}: Props) => {
+const Commentary = ({lang, comment, deleteCommentary, getCommentaries}: Props) => {
 
     const [user, setUser] = useState({} as User);
     let [role, setRole] = useState("");
+    const [isReplyActive, setIsReplyActive] = useState(false);
+    const [isChangeActive, setIsChangeActive] = useState(false);
+    const [reply, setReply] = useState("");
+    const [changeText, setChangeText] = useState(comment.text);
     let dict: Dictionary = dictionary;
+
+    const replyComm = async (userId: string) => {
+        const urlParams = new URLSearchParams(window.location.search).get('id');
+
+        if (urlParams != null) {
+            const newCommRequest = {text: reply, date: new Date().toISOString().slice(0, 10), entityId: urlParams, userId: toJS(appStore.user).id, parentId: userId} as CommentRequest;
+            await createComment(newCommRequest);
+            getCommentaries(urlParams);
+        }
+        setIsReplyActive(false);
+        setReply("");
+    }
+
+    const deleteOneCommentary = async (id: string)=> {
+        await deleteComment(id)
+
+        const urlParams = new URLSearchParams(window.location.search).get('id');
+        if (urlParams != null) {
+            getCommentaries(urlParams);
+        }
+    }
+
+    const changeComm = async (userId: string) => {
+        const urlParams = new URLSearchParams(window.location.search).get('id');
+
+        if (urlParams != null) {
+            const newCommRequest = {text: changeText, date: comment.date, entityId: comment.entityId, userId: comment.userId, parentId: comment.parentId} as CommentRequest;
+            await updateComment(comment.id, newCommRequest);
+            getCommentaries(urlParams);
+        }
+        setIsChangeActive(false);
+    }
 
     useEffect(() => {
 
         const fetchUserInformation = async () => {
             let user = await getUserInformation(comment.userId) as User;
             setUser(user);
-            console.log(user)
+            setReply("" + user.userName + ", ");
+
         }
 
         if (localStorage.getItem("role") == "Admin") {
@@ -40,7 +82,7 @@ const Commentary = ({lang, comment, deleteCommentary}: Props) => {
     <>
         <div className={styles.commentBlock}>
 
-            <div className={styles.avatar} style={{backgroundImage: `url('${Config.serverAdress}avatars/${user.id}.png')`}}></div>
+            <div className={styles.avatar} style={{backgroundImage: `url('${Config.serverAdress}/avatars/${user.avatarPath}')`}}></div>
             <div className={styles.comment}>
                 <div className={styles.commentHeader}>
                     <Typography>{user.userName}</Typography>
@@ -50,17 +92,31 @@ const Commentary = ({lang, comment, deleteCommentary}: Props) => {
                 <Typography>{comment.text}</Typography>
 
                 <div className={styles.controls}>
-                    <Button>{dict[lang].reply}</Button>
-                    <Button>{dict[lang].change}</Button>
-                    {role === "Admin" || localStorage.getItem("userId") === comment.userId ? <Button onClick={() => deleteCommentary(comment.id)} danger>{dict[lang].delete}</Button> : <></>}
+                    <Button onClick={() => setIsReplyActive(!isReplyActive)}>{dict[lang].reply}</Button>
+                    <Button onClick={() => setIsChangeActive(!isChangeActive)}>{dict[lang].change}</Button>
+                    {role === "Admin" ? <Button onClick={() => deleteCommentary(comment.id)} danger>{dict[lang].deleteVetku}</Button> : <></>}
+                    {role === "Admin" || toJS(appStore.user).id === comment.userId ? <Button onClick={() => deleteOneCommentary(comment.id)} danger>{dict[lang].delete}</Button> : <></>}
                 </div>
-
+                {isReplyActive ? <div className={commstyles.commentary__write}>
+                    <TextArea value={reply} onChange={(e) => setReply(e.target.value)} placeholder={"Write your opinion"} rows={3}></TextArea>
+                    <div className={commstyles.controls + " " + commstyles.sendComm}>
+                        <Button type={"primary"} onClick={() => replyComm(comment.id)}>{dict[lang].send}</Button>
+                        <Button danger onClick={() => setIsReplyActive(false)}>{dict[lang].stop}</Button>
+                    </div>
+                </div> : <></>}
+                {isChangeActive ? <div className={commstyles.commentary__write}>
+                    <TextArea value={changeText} onChange={(e) => setChangeText(e.target.value)} placeholder={"Write your opinion"} rows={3}></TextArea>
+                    <div className={commstyles.controls + " " + commstyles.sendComm}>
+                        <Button type={"primary"} onClick={() => changeComm(comment.id)}>{dict[lang].change}</Button>
+                        <Button danger onClick={() => setIsChangeActive(false)}>{dict[lang].stop}</Button>
+                    </div>
+                </div> : <></>}
             </div>
         </div>
 
         {comment.replies && comment.replies.map((reply, index) => (
             <div  key={index} style={{width: "98%", marginLeft: "2%"}}>
-                <Commentary deleteCommentary={deleteCommentary} lang={lang} comment={reply} />
+                <Commentary getCommentaries={getCommentaries} deleteCommentary={deleteCommentary} lang={lang} comment={reply} />
             </div>
         ))}
     </>

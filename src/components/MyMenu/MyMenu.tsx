@@ -22,6 +22,11 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
         if (localStorage.getItem('isAuth') === "true") appStore.setAuth(true);
     }, [])
 
+    const exitApp = () => {
+        appStore.setAuth(false);
+        appStore.setUser({} as User);
+    }
+
     const items = [
         {key: "home",label: <Link  href={`/${lang}`}>{menu?.home}</Link>},
         {key: "tours", label: <Link href={`/${lang}/tours`}>{menu?.tours}</Link>},
@@ -42,14 +47,16 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
             <>
                 {
                     appStore.isAuth ? <div className={'avatarWrapper'}>
-                        <div className="avatar"
-                             style={{backgroundImage: `url('${Config.serverAdress}avatars/${localStorage.getItem('userId')}.png')`}}></div>
+                        <div className="avatar" style={{backgroundImage: `url('${Config.serverAdress}avatars/${toJS(appStore.user).avatarPath}')`}}></div>
                     </div> : <></>
                 }
             </>,
-            children: [{key: "edit", label: <Link href={{ pathname: `/${lang}/profile`, query: { edit: 'true' } }}>Edit Profile</Link>}]
+            children: [{key: "edit", label: <Link href={{ pathname: `/${lang}/profile`, query: { edit: 'true' } }}>Edit Profile</Link>},
+                {key: "exit", label: <div onClick={exitApp}>Exit</div>}
+            ]
             }
     ]
+
 
     const leftItems = [
         {key: "home", label: <Link href={`/${lang}`}>{menu?.home}</Link>},
@@ -72,9 +79,12 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
                 />},
         {key: "profile", label:
                 <div className={'avatarWrapper'}>
-                        {appStore.isAuth ? <div className="avatar" style={{backgroundImage: `url('${Config.serverAdress}avatars/${toJS(appStore.user).id}.jpg')`}}></div> : <></>}
+                        {appStore.isAuth ? <div className="avatar" style={{backgroundImage: `url('${Config.serverAdress}avatars/${appStore.avatarPath}')`}}></div> : <></>}
                 </div>,
-            children: [{key: "edit", label: <Link href={{ pathname: `/${lang}/profile`, query: { edit: 'true' } }} style={{marginLeft: "100px"}}>Edit Profile</Link>}]
+            children: [{key: "edit", label: <Link href={{ pathname: `/${lang}/profile`, query: { edit: 'true' } }}>{menu?.edit}</Link>},
+                {key: "exit", label: <Link href={`/${lang}/login`} onClick={exitApp} >{menu?.exit}</Link>},
+                {key: "reservation", label: <Link href={`/${lang}/reservation`}>{menu?.reservation}</Link>}
+            ]
         }
     ]
 

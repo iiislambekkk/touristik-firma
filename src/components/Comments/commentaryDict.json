@@ -3,18 +3,27 @@
   "en": {
     "delete": "Delete",
     "reply": "Reply",
-    "change": "Change"
+    "change": "Change",
+    "send": "Send",
+    "deleteVetku": "Delete thred",
+    "stop": "Stop"
   },
 
   "kz": {
     "delete": "Жою",
     "reply": "Жауап беру",
-    "change": "Өзгерту"
+    "change": "Өзгерту",
+    "send": "Жіберу",
+    "deleteVetku": "Веткану жою",
+    "stop": "Доғару"
   },
 
   "ru": {
     "delete": "Удалить",
     "reply": "Ответить",
-    "change": "Изменить"
+    "change": "Изменить",
+    "send": "Отправить",
+    "deleteVetku": "Удалить ветку",
+    "stop": "Перестать"
   }
 }

@@ -4,4 +4,5 @@ interface User {
     phoneNumber: string;
     id: string;
     email: string;
+    role: string;
 }

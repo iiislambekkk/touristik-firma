@@ -4,7 +4,9 @@ class AppStore {
     isAuth: boolean = false;
     userId: string = ""
     isDarkMode: boolean = false;
+    isAdmin: boolean = false;
     user: User = {} as User;
+    avatarPath: string = "";
 
     constructor() {
         makeAutoObservable(this);
@@ -20,6 +22,14 @@ class AppStore {
 
     setUserId(id: string) {
         this.userId = id;
+    }
+
+    setIsAdmin(isAdmin: boolean) {
+        this.isAdmin = isAdmin;
+    }
+
+    setAvatarPath(path: string) {
+        this.avatarPath = path;
     }
 
     setDarkMode(){

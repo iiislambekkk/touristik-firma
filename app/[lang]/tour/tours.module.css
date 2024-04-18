@@ -1,3 +1,10 @@
 .days {
 
 }
+
+.inputs {
+    display: flex;
+    margin-top: 8px;
+    flex-direction: column;
+    gap: 16px;
+}

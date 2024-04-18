@@ -32,14 +32,27 @@ export default function RootLayout({
     }
 
     const getUser = async () => {
-        const currentUser = await getCurrentUser();
-        if (currentUser == "Error") return;
+        const userinfo = JSON.parse(await getCurrentUser());
+        const currentUser = userinfo.user;
+        const role = userinfo.role;
+        if (currentUser.user == "Error"){
+            appStore.setUser({} as User);
+            appStore.setAuth(false);
+            return;
+        }
+
 
         appStore.setUser(currentUser);
-        console.log(toJS(appStore.user).id)
+
+        if (role === "Admin") {
+            appStore.setIsAdmin(true);
+        }
+
+        appStore.setAuth(true);
+        appStore.setAvatarPath(currentUser.avatarPath);
     }
 
-    useEffect(() => {
+    useEffect(  () => {
         if (localStorage.getItem("isDarkMode") === "true") setdarkMode(true);
         else setdarkMode(false);
 

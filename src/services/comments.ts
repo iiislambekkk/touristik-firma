@@ -36,7 +36,7 @@ export const createComment = async (commentRequest: CommentRequest) => {
 
 export const updateComment = async (id: string, commentRequest: CommentRequest) => {
 
-    let res = await axios.put(`${Config.serverAdress}api/comments/${id}`, JSON.stringify(commentRequest), {
+    let res = await axios.put(`${Config.serverAdress}api/comments/${id}`, commentRequest, {
         headers: {
             "content-type": "application/json",
             "Authorization": "Bearer " + localStorage.getItem("token"),
@@ -46,8 +46,8 @@ export const updateComment = async (id: string, commentRequest: CommentRequest) 
     return res.data;
 }
 
-export const deleteComment = async (id: string, commentRequest: CommentRequest) => {
-    let res = await axios.put(`${Config.serverAdress}api/comments/deleteOne/${id}`, JSON.stringify(commentRequest), {
+export const deleteComment = async (id: string) => {
+    let res = await axios.put(`${Config.serverAdress}api/comments/deleteOne/${id}`, id, {
         headers: {
             "content-type": "application/json",
             "Authorization": "Bearer " + localStorage.getItem("token"),

@@ -34,10 +34,10 @@ const ToursPage = ({params}: {params: {lang: string}}) => {
     const [role, setRole] = useState('')
 
     const handleCreateTour = async (request: TourRequest) => {
-        console.log(request)
+
         await createTour(request);
         closeModal();
-        console.log('asd');
+
 
         const tours = await getAllTours();
         setTours(tours);

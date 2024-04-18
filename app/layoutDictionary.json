@@ -9,7 +9,10 @@
         "login": "Login",
         "lightMode": "Light mode",
         "darkMode": "Dark mode",
-        "language": "Language"
+        "language": "Language",
+        "exit": "Exit",
+        "edit": "Edit",
+        "reservation": "Reservation"
       },
 
       "footer": {
@@ -29,7 +32,10 @@
         "login": "Кіру",
         "lightMode": "Жарық режим",
         "darkMode": "Қараңғы режимі",
-        "language": "Тіл"
+        "language": "Тіл",
+        "exit": "Шығу",
+        "edit": "Профильді өзгерту",
+        "reservation": "Брондауға запростар"
       },
 
       "footer": {
@@ -49,7 +55,10 @@
         "login": "Войти",
         "lightMode": "Эльфийский режим",
         "darkMode": "Негрский режим",
-        "language": "Язык"
+        "language": "Язык",
+        "exit": "Выйти",
+        "edit": "Изменить профиль",
+        "reservation": "Запросы на бронь"
       },
 
       "footer": {

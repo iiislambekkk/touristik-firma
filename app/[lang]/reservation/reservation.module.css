@@ -1,0 +1,12 @@
+.reservesBlock {
+    display: flex;
+    flex-direction: column;
+    margin: 12px 0;
+    gap: 16px;
+}
+
+.reserve {
+    border: 2px solid white;
+    border-radius: 16px;
+    padding: 16px;
+}

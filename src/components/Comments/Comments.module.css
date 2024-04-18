@@ -23,6 +23,7 @@
     padding: 16px 12px;
     gap: 16px;
     justify-content: flex-start;
+    border: 2px solid white;
 }
 
 .comment {
@@ -45,6 +46,14 @@
     display: flex;
     gap: 10px;
     justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+    .controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
 }
 
 .sendComm {

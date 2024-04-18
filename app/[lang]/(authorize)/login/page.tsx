@@ -46,7 +46,10 @@ const LoginPage = ({params}: {params: {lang: string}}) => {
             localStorage.setItem("userName", user.userName);
             localStorage.setItem("userId", user.userId);
             localStorage.setItem("isAuth", 'true');
-            appStore.setUserId(user.userId)
+            appStore.setUserId(user.userId);
+            appStore.setUser(user);
+            appStore.setAuth(true);
+            appStore.setAvatarPath(user.avatarPath);
         }
         else {
             message.error("Кіру жүзеге аспады!")
