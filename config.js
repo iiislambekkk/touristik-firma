@@ -1,7 +1,7 @@
 const config = {
-  "serverAdress": "https://localhost:7118/",
+  "serverAdress": "https://asskiisotona.bsite.net/",
   "devAdress": "https://localhost:7118/",
-  "prodAdress": "https://turistikfirma.azurewebsites.net/"
+  "prodAdress": "https://asskiisotona.bsite.net/"
 }
 
 exports.Config = config;
