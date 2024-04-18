@@ -62,7 +62,7 @@ const TourDates = ({entityId, setDateId, setPriceOfDate, dateId}: Props) => {
             <div  className={styles.dates}>
 
                 {dates.map((date) => (
-                    <div className={styles.date} style={dateId == date.id ? {border: "2px solid white"} : {}}>
+                    <div key={date.id} className={styles.date} style={dateId == date.id ? {border: "2px solid white"} : {}}>
                         <Typography>{date.startDate} - {date.endDate}</Typography>
                         <div className={styles.controls}>
                             <Typography>{date.price} ₸</Typography>

@@ -52,7 +52,7 @@ const Page = () => {
                 }
 
                 return (
-                    <div className={styles.reserve}>
+                    <div key={data.id} className={styles.reserve}>
 
                         <Title level={4}  style={{marginBottom: "0px", marginTop: "0px"}} >Num of Tourists: {data.countOfTourists}</Title>
 
