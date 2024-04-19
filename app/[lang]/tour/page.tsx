@@ -7,7 +7,7 @@ import {Config} from "@/config";
 import './tour.css'
 import commstyles from "@/src/components/Comments/Comments.module.css";
 
-const { Text, Paragraph } = Typography;
+const { Paragraph } = Typography;
 import styles from "./tours.module.css";
 import Title from "antd/es/typography/Title";
 import Comments from "@/src/components/Comments/Comments";
@@ -50,7 +50,7 @@ const Page = observer(({params}: {params: {lang: string}}) => {
     const [newComm, setNewComm] = useState("");
 
     async function sendNewComm() {
-        const newCommRequest = {text: newComm, date: new Date().toISOString().slice(0, 10), entityId: entityId, userId: toJS(appStore.user).id, parentId: "00000000-0000-0000-0000-000000000000"} as CommentRequest;
+        const newCommRequest = {text: newComm, date: new Date().toISOString().slice(0, 10), entityId: entityId, userId: appStore.user.id, parentId: "00000000-0000-0000-0000-000000000000"} as CommentRequest;
 
         await createComment(newCommRequest);
         await getCommentaries(entityId);
@@ -250,6 +250,7 @@ const Page = observer(({params}: {params: {lang: string}}) => {
 
     console.log(dateId)
 
+    if (comments.length == 0) return;
 
     if (lang === "en") return (
         <div className={"tour"}>

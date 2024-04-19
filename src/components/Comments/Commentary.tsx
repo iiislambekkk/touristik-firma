@@ -30,11 +30,12 @@ const Commentary = ({lang, comment, deleteCommentary, getCommentaries}: Props) =
     const [changeText, setChangeText] = useState(comment.text);
     let dict: Dictionary = dictionary;
 
-    const replyComm = async (userId: string) => {
+    const replyComm = async (parentId: string) => {
         const urlParams = new URLSearchParams(window.location.search).get('id');
 
         if (urlParams != null) {
-            const newCommRequest = {text: reply, date: new Date().toISOString().slice(0, 10), entityId: urlParams, userId: toJS(appStore.user).id, parentId: userId} as CommentRequest;
+
+            const newCommRequest = {text: reply, date: new Date().toISOString().slice(0, 10), entityId: urlParams, userId: appStore.userId, parentId} as CommentRequest;
             await createComment(newCommRequest);
             getCommentaries(urlParams);
         }
@@ -78,6 +79,7 @@ const Commentary = ({lang, comment, deleteCommentary, getCommentaries}: Props) =
         fetchUserInformation()
     }, []);
 
+
     return (
     <>
         <div className={styles.commentBlock}>
@@ -115,7 +117,7 @@ const Commentary = ({lang, comment, deleteCommentary, getCommentaries}: Props) =
         </div>
 
         {comment.replies && comment.replies.map((reply, index) => (
-            <div  key={index} style={{width: "98%", marginLeft: "2%"}}>
+            <div  key={index + lang} style={{width: "98%", marginLeft: "2%"}}>
                 <Commentary getCommentaries={getCommentaries} deleteCommentary={deleteCommentary} lang={lang} comment={reply} />
             </div>
         ))}

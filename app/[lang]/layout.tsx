@@ -41,7 +41,9 @@ export default function RootLayout({
             return;
         }
 
-
+        localStorage.setItem("userId", currentUser.Id)
+        alert(currentUser.Id)
+        appStore.setUserId(currentUser.Id);
         appStore.setUser(currentUser);
 
         if (role === "Admin") {
