@@ -1,0 +1,36 @@
+{
+
+  "en": {
+    "name": "Name",
+    "birthDate": "Birth Date",
+    "numOfPassport": "Num of passport",
+    "dateOfPassport": "Date of passport",
+    "pol": "Pol",
+    "info": "Information about tourists",
+    "contacts": "Contacts",
+    "countOfTourists": "Num of Tourists"
+  },
+
+  "kz": {
+    "name": "Есімі",
+    "birthDate": "Туылған күні",
+    "numOfPassport": "Пасспорт нөмірі",
+    "dateOfPassport": "Пасспорт шыққан күні",
+    "pol": "Жынысы",
+    "info": "Туристтер ақпараты",
+    "contacts": "Байланыс ақпараттары",
+    "countOfTourists": "Туристтер саны"
+  },
+
+  "ru": {
+    "name": "Имя",
+    "birthDate": "Днюха",
+    "numOfPassport": "Номер пасспорта",
+    "dateOfPassport": "Дата пасспорта",
+    "pol": "Пол",
+    "info": "Информация о туристах",
+    "contacts": "Контактные данные",
+    "countOfTourists": "Количество туристов"
+  }
+
+}

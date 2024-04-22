@@ -49,9 +49,9 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                                 style={{flex: 1}}>
                             Delete
                         </Button>
-                        <Button style={{flex: 1}} onClick={() => router.push("/en/tour?id=" + tour.id)}>More</Button>
+                        <Button style={{flex: 1}} onClick={() => router.push("/en/tour/" + tour.id)}>More</Button>
                     </div> : <div className={"card__buttons"}>
-                        <Button style={{flex: 1}} onClick={() => router.push("/en/tour?id=" + tour.id)}>More</Button>
+                        <Button style={{flex: 1}} onClick={() => router.push("/en/tour/" + tour.id)}>More</Button>
                     </div>}
 
 
@@ -83,9 +83,9 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                                 style={{flex: 1}}>
                             Өшіру
                         </Button>
-                        <Button onClick={() => router.push("/kz/tour?id=" + tour.id)}>Толығырақ</Button>
+                        <Button onClick={() => router.push("/kz/tour/" + tour.id)}>Толығырақ</Button>
                     </div> : <div className={"card__buttons"}>
-                        <Button onClick={() => router.push("/kz/tour?id=" + tour.id)}>Толығырақ</Button>
+                        <Button onClick={() => router.push("/kz/tour/" + tour.id)}>Толығырақ</Button>
                     </div>}
 
                 </Card>
@@ -117,9 +117,9 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                             Удалить
                         </Button>
 
-                        <Button onClick={() => router.push("/ru/tour?id=" + tour.id)}>Подробнее</Button>
+                        <Button onClick={() => router.push("/ru/tour/" + tour.id)}>Подробнее</Button>
                     </div> : <div className={"card__buttons"}>
-                        <Button onClick={() => router.push("/ru/tour?id=" + tour.id)}>Подробнее</Button>
+                        <Button onClick={() => router.push("/ru/tour/" + tour.id)}>Подробнее</Button>
                     </div> }
 
 

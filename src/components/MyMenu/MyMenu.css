@@ -38,6 +38,13 @@
     border: 1px solid white;
 }
 
+.notify::before {
+    content: "🔴";
+    position: absolute;
+    top: 16px;
+    right: 36px;
+}
+
 .avatarWrapper {
     padding-top: 8px;
 }

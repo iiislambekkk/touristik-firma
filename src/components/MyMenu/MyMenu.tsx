@@ -7,7 +7,7 @@ import {useRouter} from "next/navigation";
 import {Config} from "@/config";
 import {appStore} from "@/src/store/appStore";
 import {observer} from "mobx-react-lite";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import "./MyMenu.css";
 import {toJS} from "mobx";
 
@@ -63,6 +63,7 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
         {key: "tours", label: <Link href={`/${lang}/tours`}>{menu?.tours}</Link>},
     ]
 
+
     const rightItems = [
         {key: "Theme", label: <Switch onChange={themeHandler} checked={localStorage.getItem("isDarkMode") === "true"} checkedChildren={menu?.lightMode} unCheckedChildren={menu?.darkMode} />},
         {key: "register", label: <Link href={`/${lang}/register`}>{menu?.register}</Link>},
@@ -79,11 +80,11 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
                 />},
         {key: "profile", label:
                 <div className={'avatarWrapper'}>
-                        {appStore.isAuth ? <div className="avatar" style={{backgroundImage: `url('${Config.serverAdress}avatars/${appStore.avatarPath}')`}}></div> : <></>}
+                        {appStore.isAuth ? <div className={`avatar ${appStore.isNotifyActive ? "notify" : ""}`} style={{backgroundImage: `url('${Config.serverAdress}avatars/${toJS(appStore.user).avatarPath}')`}}></div> : <></>}
                 </div>,
             children: [{key: "edit", label: <Link href={{ pathname: `/${lang}/profile`, query: { edit: 'true' } }}>{menu?.edit}</Link>},
                 {key: "exit", label: <Link href={`/${lang}/login`} onClick={exitApp} >{menu?.exit}</Link>},
-                {key: "reservation", label: <Link href={`/${lang}/reservation`}>{menu?.reservation}</Link>}
+                appStore.isAdmin? {key: "reservation", label: <Link onClick={() => appStore.setIsNotifyActive(false)} href={`/${lang}/reservation`}>{menu?.reservation}</Link>} : null
             ]
         }
     ]
@@ -124,6 +125,7 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
                     items={leftItems}
                     style={{flex: "auto" }}
                 />
+                {appStore.isNotifyActive ? <></> : <></>}
                 <Menu
                     className={'headerRightMenu'}
                     mode="horizontal"

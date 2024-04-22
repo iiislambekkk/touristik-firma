@@ -71,6 +71,8 @@ const CreateUpdateTour = (
     }
 
 
+
+
     const props: UploadProps = {
         name: 'file',
         action: `${Config.serverAdress}api/tours/uploadImage`,
@@ -101,7 +103,7 @@ const CreateUpdateTour = (
         setDaysKz(values.daysKz != undefined ? JSON.parse(values.daysKz) as Kunder : {} as Kunder)
         setDaysRu(values.daysRu != undefined ? JSON.parse(values.daysRu) as Kunder : {} as Kunder)
         setNumOfDays(values.numOfDays)
-        console.log(values.daysKz)
+
     }, [values])
 
     const itemsKz: CollapseProps['items'] = [
@@ -130,7 +132,7 @@ const CreateUpdateTour = (
                             }
                             setDaysKz({...daysKz, [i]: {...daysKz[i], header: e.target.value}})
 
-                            console.log(daysKz[i as keyof object]);
+                            /*console.log(daysKz[i as keyof object]);*/
                         }}
                         placeholder={"Заголовок жаз "}
                     />
@@ -146,7 +148,7 @@ const CreateUpdateTour = (
                             }
                             setDaysKz({...daysKz, [i]: {...daysKz[i], description: e.target.value}})
 
-                            console.log(daysKz[i as keyof object]);
+                            /*console.log(daysKz[i as keyof object]);*/
                         }}
                         placeholder={"Описание жазыңыз"}
                     />
@@ -171,7 +173,7 @@ const CreateUpdateTour = (
                             }
                             setDaysEn({...daysEn, [i]: {...daysEn[i], header: e.target.value}})
 
-                            console.log(daysEn[i as keyof object]);
+                            /*console.log(daysEn[i as keyof object]);*/
                         }}
                         placeholder={"Type the title"}
                     />
@@ -187,7 +189,7 @@ const CreateUpdateTour = (
                             }
                             setDaysEn({...daysEn, [i]: {...daysEn[i], description: e.target.value}})
 
-                            console.log(daysEn[i as keyof object]);
+                           /* console.log(daysEn[i as keyof object]);*/
                         }}
                         placeholder={"Type the Description"}
                     />
@@ -212,7 +214,7 @@ const CreateUpdateTour = (
                             }
                             setDaysRu({...daysRu, [i]: {...daysRu[i], header: e.target.value}})
 
-                            console.log(daysRu[i as keyof object]);
+                         /*   console.log(daysRu[i as keyof object]);*/
                         }}
                         placeholder={"Введите заголовок"}
                     />
@@ -228,7 +230,7 @@ const CreateUpdateTour = (
                             }
                             setDaysRu({...daysRu, [i]: {...daysRu[i], description: e.target.value}})
 
-                            console.log(daysRu[i as keyof object]);
+                         /*   console.log(daysRu[i as keyof object]);*/
                         }}
                         placeholder={"Введите описание"}
                     />

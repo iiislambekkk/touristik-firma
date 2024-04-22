@@ -10,15 +10,24 @@ export interface DateRequest {
 }
 
 export const getAllDates = async (entityId: string) => {
+    try {
+        let res = await axios.get(`${Config.serverAdress}api/tourdates/${entityId}`, {
+            headers: {
+                'accept': 'application/json',
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+            }
+        });
 
-    let res = await axios.get(`${Config.serverAdress}api/tourdates/${entityId}`, {
-        headers: {
-            'accept': 'application/json',
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-        }
-    });
+        return res.data;
+    }
+    catch(e) {
 
-    return res.data;
+        console.log(e)
+        return "Error";
+    }
+
+
+
 }
 
 export const getDateById = async (entityId: string) => {

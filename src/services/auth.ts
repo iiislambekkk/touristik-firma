@@ -27,14 +27,17 @@ export const registerUser = async (registerRequest: RegisterRequest) => {
 }
 
 export const loginUser = async (loginRequest: LoginRequest) => {
-    const rez = await fetch(`${Config.serverAdress}api/Authorize/SignIn`, {
-        method: "POST",
-        headers: {
-            "content-type": "application/json",
-        },
-        body: JSON.stringify(loginRequest),
-    });
+    try {
+        const rez = await fetch(`${Config.serverAdress}api/Authorize/SignIn`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(loginRequest),
+        });
+        return rez;
+    } catch (e) {
+        throw new Error("Bred pitt");
+    }
 
-
-    return rez;
 }

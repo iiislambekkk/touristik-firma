@@ -1,4 +1,5 @@
 import {makeAutoObservable} from "mobx";
+import {HubConnection} from "@microsoft/signalr";
 
 class AppStore {
     isAuth: boolean = false;
@@ -7,6 +8,8 @@ class AppStore {
     isAdmin: boolean = false;
     user: User = {} as User;
     avatarPath: string = "";
+    connection: HubConnection = {} as HubConnection;
+    isNotifyActive: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -16,12 +19,20 @@ class AppStore {
         this.user = user;
     }
 
+    setIsNotifyActive(isNA: boolean) {
+        this.isNotifyActive = isNA;
+    }
+
     setAuth(isAuth: boolean) {
         this.isAuth = isAuth;
     }
 
     setUserId(id: string) {
         this.userId = id;
+    }
+
+    setConnection(connection: HubConnection) {
+        this.connection = connection;
     }
 
     setIsAdmin(isAdmin: boolean) {

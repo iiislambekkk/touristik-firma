@@ -34,29 +34,43 @@ const LoginPage = ({params}: {params: {lang: string}}) => {
             password: password,
         } as LoginRequest;
 
-        const rez = await loginUser(loginRequest);
+        try {
+            appStore.setAuth(false);
+            appStore.setUser({} as User);
+            appStore.setAvatarPath("");
+            localStorage.removeItem("token");
+            const rez = await loginUser(loginRequest);
 
-        if (rez.status == 200) {
-            message.success("Кіру жүзеге асты!")
+            if (rez.status == 200) {
+                message.success("Кіру жүзеге асты!")
 
-            let user = JSON.parse(await rez.text())
+                let user = JSON.parse(await rez.text())
 
-            localStorage.setItem("token", user.token);
-            localStorage.setItem("role", user.role);
-            localStorage.setItem("userName", user.userName);
-            localStorage.setItem("userId", user.userId);
-            localStorage.setItem("isAuth", 'true');
-            appStore.setUserId(user.userId);
-            appStore.setUser(user);
-            appStore.setAuth(true);
-            appStore.setAvatarPath(user.avatarPath);
+                localStorage.setItem("token", user.token);
+                localStorage.setItem("role", user.role);
+                localStorage.setItem("userName", user.userName);
+                localStorage.setItem("userId", user.userId);
+                localStorage.setItem("isAuth", 'true');
+
+                if (user.role === "Admin") appStore.setIsAdmin(true);
+                else appStore.setIsAdmin(false);
+                appStore.setUserId(user.userId);
+                appStore.setAvatarPath(user.user.avatarPath);
+                appStore.setUser(user.user);
+                appStore.setAuth(true);
+
+            }
+            else {
+                message.error("Кіру жүзеге аспады!")
+            }
         }
-        else {
-            message.error("Кіру жүзеге аспады!")
+        catch(e) {
+            console.log(e);
+            message.error("Кіру жүзеге аспады!");
         }
+
 
         setLoading(false);
-        appStore.setAuth(true)
     }
 
     return (

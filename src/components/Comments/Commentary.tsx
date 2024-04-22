@@ -16,11 +16,13 @@ interface Props {
     lang: string,
     deleteCommentary: (id: string) => void;
     getCommentaries: (id: string) => void;
+    tourid: string;
 }
 
 
 
-const Commentary = ({lang, comment, deleteCommentary, getCommentaries}: Props) => {
+const Commentary = ({lang, comment, deleteCommentary, getCommentaries, tourid}: Props) => {
+
 
     const [user, setUser] = useState({} as User);
     let [role, setRole] = useState("");
@@ -30,42 +32,37 @@ const Commentary = ({lang, comment, deleteCommentary, getCommentaries}: Props) =
     const [changeText, setChangeText] = useState(comment.text);
     let dict: Dictionary = dictionary;
 
+
     const replyComm = async (parentId: string) => {
-        const urlParams = new URLSearchParams(window.location.search).get('id');
 
-        if (urlParams != null) {
+        const newCommRequest = {text: reply, date: new Date().toISOString().slice(0, 10), entityId: tourid, userId: appStore.userId, parentId} as CommentRequest;
+        await createComment(newCommRequest);
 
-            const newCommRequest = {text: reply, date: new Date().toISOString().slice(0, 10), entityId: urlParams, userId: appStore.userId, parentId} as CommentRequest;
-            await createComment(newCommRequest);
-            getCommentaries(urlParams);
-        }
+        getCommentaries(tourid);
+
         setIsReplyActive(false);
         setReply("");
     }
 
     const deleteOneCommentary = async (id: string)=> {
         await deleteComment(id)
-
-        const urlParams = new URLSearchParams(window.location.search).get('id');
-        if (urlParams != null) {
-            getCommentaries(urlParams);
-        }
+        getCommentaries(tourid);
     }
 
     const changeComm = async (userId: string) => {
-        const urlParams = new URLSearchParams(window.location.search).get('id');
 
-        if (urlParams != null) {
-            const newCommRequest = {text: changeText, date: comment.date, entityId: comment.entityId, userId: comment.userId, parentId: comment.parentId} as CommentRequest;
-            await updateComment(comment.id, newCommRequest);
-            getCommentaries(urlParams);
-        }
+
+        const newCommRequest = {text: changeText, date: comment.date, entityId: comment.entityId, userId: comment.userId, parentId: comment.parentId} as CommentRequest;
+        await updateComment(comment.id, newCommRequest);
+        getCommentaries(tourid);
+
         setIsChangeActive(false);
     }
 
     useEffect(() => {
 
         const fetchUserInformation = async () => {
+
             let user = await getUserInformation(comment.userId) as User;
             setUser(user);
             setReply("" + user.userName + ", ");
@@ -97,7 +94,7 @@ const Commentary = ({lang, comment, deleteCommentary, getCommentaries}: Props) =
                     <Button onClick={() => setIsReplyActive(!isReplyActive)}>{dict[lang].reply}</Button>
                     <Button onClick={() => setIsChangeActive(!isChangeActive)}>{dict[lang].change}</Button>
                     {role === "Admin" ? <Button onClick={() => deleteCommentary(comment.id)} danger>{dict[lang].deleteVetku}</Button> : <></>}
-                    {role === "Admin" || toJS(appStore.user).id === comment.userId ? <Button onClick={() => deleteOneCommentary(comment.id)} danger>{dict[lang].delete}</Button> : <></>}
+                    {role === "Admin" || toJS(appStore.user).Id === comment.userId ? <Button onClick={() => deleteOneCommentary(comment.id)} danger>{dict[lang].delete}</Button> : <></>}
                 </div>
                 {isReplyActive ? <div className={commstyles.commentary__write}>
                     <TextArea value={reply} onChange={(e) => setReply(e.target.value)} placeholder={"Write your opinion"} rows={3}></TextArea>
@@ -118,7 +115,7 @@ const Commentary = ({lang, comment, deleteCommentary, getCommentaries}: Props) =
 
         {comment.replies && comment.replies.map((reply, index) => (
             <div  key={index + lang} style={{width: "98%", marginLeft: "2%"}}>
-                <Commentary getCommentaries={getCommentaries} deleteCommentary={deleteCommentary} lang={lang} comment={reply} />
+                <Commentary tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary} lang={lang} comment={reply} />
             </div>
         ))}
     </>

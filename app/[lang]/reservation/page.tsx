@@ -8,11 +8,13 @@ import TourDates from "@/src/components/TourDates/TourDates";
 import Title from "antd/es/typography/Title";
 import {Collapse, CollapseProps, Typography} from "antd";
 import {getDateById} from "@/src/services/dates";
+import * as dictionary from "./reservationDict.json";
 
-const Page = () => {
+const Page = ({params}: {params: {lang: string}}) => {
 
     const [reserveDatas, setReserveDatas] = useState<ReserveData[]>([]);
-
+    let dict: Dictionary = dictionary;
+    const reservDict = dict?.[params.lang];
 
 
     useEffect(() =>
@@ -32,7 +34,7 @@ const Page = () => {
                 {
 
                 let touristInfo: Tourists = data.touristsInfo != undefined ? JSON.parse(data.touristsInfo) : {};
-                console.log(touristInfo)
+
 
                 const touristsItems: CollapseProps['items'] = [
                 ];
@@ -44,8 +46,11 @@ const Page = () => {
                         label: `Турист ${i}`,
                         children: (
                             <div className={styles.days}>
-                                <Title>{touristInfo[i].fio}</Title>
-                                <Typography>{touristInfo[i].birthDate}</Typography>
+                                <Title>{reservDict.name}: {touristInfo[i].fio}</Title>
+                                <Typography>{reservDict.birthDate}: {touristInfo[i].birthDate}</Typography>
+                                <Typography>{reservDict.numOfPassport}: {touristInfo[i].numOfPassport}</Typography>
+                                <Typography>{reservDict.dateOfPassport}: {touristInfo[i].dateOfPassport}</Typography>
+                                <Typography>{reservDict.pol}: {touristInfo[i].pol}</Typography>
                             </div>
                         ),
                     })
@@ -54,14 +59,14 @@ const Page = () => {
                 return (
                     <div key={data.id} className={styles.reserve}>
 
-                        <Title level={4}  style={{marginBottom: "0px", marginTop: "0px"}} >Num of Tourists: {data.countOfTourists}</Title>
+                        <Title level={4}  style={{marginBottom: "0px", marginTop: "0px"}} >{reservDict.countOfTourists}: {data.countOfTourists}</Title>
 
-                        <Title level={3} style={{marginBottom: "0px", marginTop: "0px"}}>Контактная информация:</Title>
+                        <Title level={3} style={{marginBottom: "0px", marginTop: "0px"}}>{reservDict.contacts}:</Title>
                         <Typography>Email: {data.email}</Typography>
                         <Typography>Phone: {data.phone}</Typography>
                         <Typography>Question: {data.question}</Typography>
 
-                        <Title level={3} style={{marginBottom: "0px", marginTop: "12px"}}>Информация о туристах:</Title>
+                        <Title level={3} style={{marginBottom: "0px", marginTop: "12px"}}>{reservDict.info}:</Title>
 
 
                          <Collapse accordion={true} items={touristsItems}></Collapse>

@@ -24,14 +24,19 @@ export const getAllComments = async (entityId: string) => {
 }
 
 export const createComment = async (commentRequest: CommentRequest) => {
-    let res = await axios.post(`${Config.serverAdress}api/comments/`, commentRequest,{
-        headers: {
-            'accept': 'application/json',
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-        }
-    });
+    try {
+        let res = await axios.post(`${Config.serverAdress}api/comments/`, commentRequest,{
+            headers: {
+                'accept': 'application/json',
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+            }
+        });
 
-    return res.data;
+        return res.data;
+    } catch(e) {
+        console.log(e)
+    }
+
 }
 
 export const updateComment = async (id: string, commentRequest: CommentRequest) => {

@@ -10,9 +10,10 @@ import {observer} from "mobx-react-lite";
 
 const Page = observer(() => {
     const updateUser = async () => {
-        const currentUser = await getCurrentUser();
-        if (currentUser == "Error") return;
+        const userinfo = JSON.parse(await getCurrentUser());
+        const currentUser = userinfo.user;
         appStore.setUser(currentUser);
+        appStore.setAvatarPath(currentUser.avatarPath)
     }
 
     const props: UploadProps = {
@@ -24,8 +25,9 @@ const Page = observer(() => {
         onChange(info) {
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully`);
-                setTimeout(updateUser, 4000)
+                updateUser();
             } else if (info.file.status === 'error') {
+
                 message.error(`${info.file.name} file upload failed.`);
             }
         },

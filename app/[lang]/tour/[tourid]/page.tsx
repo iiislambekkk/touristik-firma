@@ -1,14 +1,15 @@
 "use client"
 
 import React, {useEffect, useState} from 'react';
-import {getOneTour} from "@/src/services/tours";
-import {Button, Collapse, CollapseProps, Typography} from 'antd';
+import {getOneTour, getTourPhotos, uploadTourImg} from "@/src/services/tours";
+import {Image} from "antd";
+import {Button, Carousel, Collapse, CollapseProps, message, Typography, Upload, UploadProps} from 'antd';
 import {Config} from "@/config";
-import './tour.css'
+import './../tour.css'
 import commstyles from "@/src/components/Comments/Comments.module.css";
 
 const { Paragraph } = Typography;
-import styles from "./tours.module.css";
+import styles from "./../tours.module.css";
 import Title from "antd/es/typography/Title";
 import Comments from "@/src/components/Comments/Comments";
 import {CommentRequest, createComment, deleteCommentAndChildren, getAllComments} from "@/src/services/comments";
@@ -19,21 +20,19 @@ import {observer} from "mobx-react-lite";
 import TourDates from "@/src/components/TourDates/TourDates";
 import Input from "antd/es/input/Input";
 import {createReservData, ReservationRequest} from "@/src/services/reservationData";
-import {redirect} from "next/navigation";
+import Connector from "@/src/helpers/signalR";
+import {HttpTransportType, HubConnectionBuilder} from "@microsoft/signalr";
+import {UploadOutlined} from "@ant-design/icons";
 
 
-const Page = observer((/*{params}: {params: {lang: string}}*/) => {
-    return <></>
-/*
-    const urlParams = new URLSearchParams(window.location.search).get('id');
-    let entityId : string;
-    if (urlParams == null) {
-        alert(urlParams)
-        entityId = "cringe";
-    }
-    else {
-        entityId = urlParams;
-    }
+const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
+
+    const tourid = params.tourid;
+    let entityId : string = tourid;
+
+    /*const { newMessage, events } = Connector();
+    const [message, setMessage] = useState("initial value");*/
+
 
 
 
@@ -47,6 +46,7 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
     const [countOfTourists, setCountOfTourists] = useState(0);
     const [priceOfDate, setPriceOfDate] = useState(0);
     const [tourists, setTourists] = useState({} as Tourists);
+    const [tourPhotos, setTourPhotos] = useState<TourPhotos[]>([])
 
     const lang = params.lang;
 
@@ -58,16 +58,6 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
     const [newComm, setNewComm] = useState("");
 
     useEffect(() => {
-
-        const urlParams = new URLSearchParams(window.location.search).get('id');
-        let entityId : string;
-        if (urlParams != null) {
-            entityId = urlParams;
-        }
-        else {
-            redirect("/error");
-        }
-
         const getTour = async () => {
             const tour = await getOneTour(entityId);
 
@@ -76,10 +66,11 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
 
         getTour();
         getCommentaries(entityId);
+        getTourPics(entityId);
     }, [])
 
     async function sendNewComm() {
-        const newCommRequest = {text: newComm, date: new Date().toISOString().slice(0, 10), entityId: entityId, userId: appStore.user.id, parentId: "00000000-0000-0000-0000-000000000000"} as CommentRequest;
+        const newCommRequest = {text: newComm, date: new Date().toISOString().slice(0, 10), entityId: entityId, userId: toJS(appStore.user).Id, parentId: "00000000-0000-0000-0000-000000000000"} as CommentRequest;
 
         await createComment(newCommRequest);
         await getCommentaries(entityId);
@@ -89,6 +80,13 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
     async function deleteCommentary(id: string) {
         await deleteCommentAndChildren(id);
         await getCommentaries(entityId);
+    }
+
+    const getTourPics = async(id: string) => {
+        const photos = await getTourPhotos(id);
+        console.log(photos.data)
+        setTourPhotos(photos.data);
+
     }
 
     const getCommentaries = async(id: string) => {
@@ -107,6 +105,8 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
         setEmail("")
         setCountOfTourists(0)
         setQuestion("")
+
+        await appStore.connection.invoke("SendNotification");
     }
 
 
@@ -260,12 +260,31 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
 
 
 
+    const uploadImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        let fd = new FormData()
+        let fileList = e.target.files;
+        let file: File = {} as File;
+        if (fileList != null) {
+            file = fileList[0];
+        }
+
+        fd.set("file", file)
+        fd.set("entityId", entityId)
+        fd.set("photoAlt", "Bred Pitt")
+
+        let res = await uploadTourImg(fd);
+        console.log(res)
+    }
+
+
     if (lang === "en") return (
         <div className={"tour"}>
             <div className="tour__header">
                 <img src={`${Config.serverAdress}${tour.previewPhotoPath}`} alt="" className="tour__header-image"/>
                 <h1 className={"tour__header-text"}>{tour.titleEn}</h1>
             </div>
+
+
 
             <Paragraph className={'tour__price'}>Cost: {tour.price} тг</Paragraph>
 
@@ -276,6 +295,18 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
 
             <Collapse accordion={true} items={itemsEn}></Collapse>
 
+            {appStore.isAdmin ? <input type={"file"} onChange={(e) => uploadImg(e)} placeholder={"Upload file"}></input> : <></>}
+
+            <Carousel autoplay>
+                {tourPhotos.map((photo) =>
+
+                    <div className="tour__header">
+                        <Image style={{}} src={`${Config.serverAdress}${photo.photoPath}`} width={1980} height={726} alt="" />
+                    </div>
+
+
+                )}
+            </Carousel>
 
             <h2 style={{fontSize: "48px"}}>Reviews</h2>
 
@@ -287,10 +318,12 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
             </div>
 
 
+
             {comments.length == 0 ?  <p>There are no reviews yet...</p> :
-                <Comments getCommentaries={getCommentaries} deleteCommentary={deleteCommentary}  entityId={entityId} lang={lang} comments={comments}/>
+                <Comments tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary}  entityId={entityId} lang={lang} comments={comments}/>
 
             }
+
 
 
             <p style={{fontSize: "48px", marginBottom: "12px"}}>Num of Tourists:</p>
@@ -337,6 +370,16 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
 
             <Collapse accordion={true} items={itemsKz}></Collapse>
 
+            {appStore.isAdmin ? <input type={"file"} onChange={(e) => uploadImg(e)} placeholder={"Upload file"}></input> : <></>}
+
+            <Carousel autoplay>
+                {tourPhotos.map((photo) =>
+                    <div className="tour__header" style={{maxWidth: "1080px", display: "flex", justifyContent: "center", maxHeight: "726px"}}>
+                        <Image style={{}} src={`${Config.serverAdress}${photo.photoPath}`} width={1980} height={726} alt="" />
+                    </div>
+                )}
+            </Carousel>
+
             <h2 style={{fontSize: "48px"}}>Пікірлер</h2>
             <div className={commstyles.commentary__write}>
                 <TextArea value={newComm} onChange={(e) => setNewComm(e.target.value)} placeholder={"Ойынызбен бөлісініз"} rows={3}></TextArea>
@@ -347,8 +390,11 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
 
 
             {comments.length == 0 ?  <p>Әлі пікірлер жоқ...</p> :
-                <Comments getCommentaries={getCommentaries} deleteCommentary={deleteCommentary}  entityId={entityId} lang={lang} comments={comments}/>
+                <Comments  tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary}  entityId={entityId} lang={lang} comments={comments}/>
             }
+
+            <p style={{fontSize: "48px", marginBottom: "12px"}}>Турист саны:</p>
+            <Input value={countOfTourists} onChange={(e) => setCountOfTourists(Number(e.target.value))}></Input>
 
             <p style={{fontSize: "48px"}}>Даталар:</p>
             <TourDates dateId={dateId} setPriceOfDate={setPriceOfDate} setDateId={setDateId} entityId={entityId}></TourDates>
@@ -391,6 +437,16 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
 
             <Collapse accordion={true} items={itemsRu}></Collapse>
 
+            {appStore.isAdmin ? <input type={"file"} onChange={(e) => uploadImg(e)} placeholder={"Upload file"}></input> : <></>}
+
+            <Carousel autoplay>
+                {tourPhotos.map((photo) =>
+                    <div className="tour__header" style={{maxWidth: "1080px", display: "flex", justifyContent: "center", maxHeight: "726px"}}>
+                        <Image style={{}} src={`${Config.serverAdress}${photo.photoPath}`} width={1980} height={726} alt="" />
+                    </div>
+                )}
+            </Carousel>
+
             <h2 style={{fontSize: "48px"}}>Отзывы</h2>
             <div className={commstyles.commentary__write}>
                 <TextArea value={newComm} onChange={(e) => setNewComm(e.target.value)} placeholder={"Поделитесь мнением"} rows={3}></TextArea>
@@ -401,8 +457,12 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
 
 
             {comments.length == 0 ?  <p>На этот тур пока нет отзывов...</p> :
-                <Comments getCommentaries={getCommentaries} deleteCommentary={deleteCommentary}  entityId={entityId} lang={lang} comments={comments}/>
+                <Comments tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary}  entityId={entityId} lang={lang} comments={comments}/>
             }
+
+            <p style={{fontSize: "48px", marginBottom: "12px"}}>Количество туристов:</p>
+            <Input value={countOfTourists} onChange={(e) => setCountOfTourists(Number(e.target.value))}></Input>
+
             <p style={{fontSize: "48px"}}>Даты:</p>
             <TourDates dateId={dateId} setPriceOfDate={setPriceOfDate} setDateId={setDateId} entityId={entityId}></TourDates>
 
@@ -427,7 +487,7 @@ const Page = observer((/*{params}: {params: {lang: string}}*/) => {
             <Button style={{marginTop: "8px"}} onClick={sendReservationData}>Отправить заявку</Button>
         </div>
     );
-    else return <h1>AHAHAHAh</h1>*/
+    else return <h1>AHAHAHAh</h1>
 })
 
 export default Page;

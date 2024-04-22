@@ -39,6 +39,73 @@ export const getAllTours = async () => {
 }
 
 export const createTour = async (tourRequest: TourRequest) => {
+/*
+
+    let descEn, descRu;
+    let daysEn, daysRu;
+
+
+    const options = {
+        method: 'POST',
+        url: 'https://google-translate1.p.rapidapi.com/language/translate/v2',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Accept-Encoding': 'application/gzip',
+            'X-RapidAPI-Key': 'e2afaae72cmshd5dd1c01ceca873p10b2b2jsnf0c659bfff28',
+            'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
+        },
+        data: {}
+    };
+
+    try {
+        const encodedParams = new URLSearchParams();
+        encodedParams.set('q', tourRequest.descriptionKz);
+        encodedParams.set('target', 'en');
+        encodedParams.set('source', 'kk');
+        options.data = encodedParams;
+
+        const response1 = await axios.request(options);
+        descEn = response1.data.data.translations[0].translatedText;
+
+        const encodedParams2 = new URLSearchParams();
+        encodedParams.set('q', tourRequest.descriptionKz);
+        encodedParams.set('target', 'ru');
+        encodedParams.set('source', 'kk');
+        options.data = encodedParams2;
+
+        const response2 = await axios.request(options);
+        descRu = response2.data.data.translations[0].translatedText;
+
+        const encodedParams3 = new URLSearchParams();
+        encodedParams.set('q', tourRequest.daysKz);
+        encodedParams.set('target', 'en');
+        encodedParams.set('source', 'kk');
+        options.data = encodedParams3;
+
+        const response3 = await axios.request(options);
+        daysEn = response3.data.data.translations[0].translatedText;
+
+        const encodedParams4 = new URLSearchParams();
+        encodedParams.set('q', tourRequest.daysKz);
+        encodedParams.set('target', 'ru');
+        encodedParams.set('source', 'kk');
+        options.data = encodedParams2;
+
+        const response4 = await axios.request(options);
+        daysRu = response4.data.data.translations[0].translatedText;
+
+    } catch (error) {
+        console.log("BREDDD")
+        console.error(error);
+    }
+
+    tourRequest.daysRu = daysRu;
+    tourRequest.daysEn = daysEn;
+    tourRequest.descriptionRu = descRu;
+    tourRequest.descriptionEn = descEn;
+*/
+
+
     await fetch(`${Config.serverAdress}api/tours`, {
         method: "POST",
         headers: {
@@ -58,7 +125,6 @@ export const updateTour = async (id: string, tourRequest: TourRequest) => {
         }
     })
 
-    console.log(tourRequest.daysEn)
     return res;
 }
 
@@ -72,10 +138,8 @@ export const deleteTour = async (id: string) => {
     });
 }
 
-/*
-export const uploadTourImg = async (f: FormData) => {
-
-    let res = await axios.post(`${Config.serverAdress}api/tours/uploadImage`, f, {
+export const getTourPhotos = async (id: string) => {
+    let res = await axios.get(`${Config.serverAdress}api/tourphotos/${id}`, {
         headers: {
             'accept': 'application/json',
             "Authorization": "Bearer " + localStorage.getItem("token"),
@@ -84,4 +148,18 @@ export const uploadTourImg = async (f: FormData) => {
     })
 
     return res;
-}*/
+}
+
+
+export const uploadTourImg = async (f: FormData) => {
+    console.log(f.get("file"));
+    let res = await axios.post(`${Config.serverAdress}api/tourphotos`, f, {
+        headers: {
+            'accept': 'application/json',
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            'Content-Type': `text/plain; charset=utf-8;`,
+        }
+    })
+
+    return res;
+}

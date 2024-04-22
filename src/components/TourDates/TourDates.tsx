@@ -22,9 +22,10 @@ const TourDates = ({entityId, setDateId, setPriceOfDate, dateId}: Props) => {
     const [price, setPrice] = useState(0);
 
     const getDates = async () => {
+
         const res = await getAllDates(entityId);
-        setDates(res);
-        console.log(res)
+        if (res !== "Error") setDates(res);
+
     }
 
     const addDate = async () => {
@@ -60,7 +61,6 @@ const TourDates = ({entityId, setDateId, setPriceOfDate, dateId}: Props) => {
                 <></>
             }
             <div  className={styles.dates}>
-
                 {dates.map((date) => (
                     <div key={date.id} className={styles.date} style={dateId == date.id ? {border: "2px solid white"} : {}}>
                         <Typography>{date.startDate} - {date.endDate}</Typography>
