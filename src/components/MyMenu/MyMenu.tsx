@@ -66,8 +66,8 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
 
     const rightItems = [
         {key: "Theme", label: <Switch onChange={themeHandler} checked={localStorage.getItem("isDarkMode") === "true"} checkedChildren={menu?.lightMode} unCheckedChildren={menu?.darkMode} />},
-        {key: "register", label: <Link href={`/${lang}/register`}>{menu?.register}</Link>},
-        {key: "login", label: <Link href={`/${lang}/login`}>{menu?.login}</Link>},
+        {key: "register", label: !appStore.isAuth ? <Link href={`/${lang}/register`}>{menu?.register}</Link> : <></> },
+        {key: "login", label: !appStore.isAuth ? <Link href={`/${lang}/login`}>{menu?.login}</Link> : <></>},
         {key: "lang", label:
                 <Select
                     onChange={(value) => router.push(langHandler(value))}
