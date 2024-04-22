@@ -298,9 +298,9 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
             {appStore.isAdmin ? <input type={"file"} onChange={(e) => uploadImg(e)} placeholder={"Upload file"}></input> : <></>}
 
             <Carousel autoplay>
-                {tourPhotos.map((photo) =>
+                {tourPhotos.map((photo, index) =>
 
-                    <div className="tour__header">
+                    <div key={index + lang} className="tour__header">
                         <Image style={{}} src={`${Config.serverAdress}${photo.photoPath}`} width={1980} height={726} alt="" />
                     </div>
 
@@ -373,8 +373,8 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
             {appStore.isAdmin ? <input type={"file"} onChange={(e) => uploadImg(e)} placeholder={"Upload file"}></input> : <></>}
 
             <Carousel autoplay>
-                {tourPhotos.map((photo) =>
-                    <div className="tour__header" style={{maxWidth: "1080px", display: "flex", justifyContent: "center", maxHeight: "726px"}}>
+                {tourPhotos.map((photo, index) =>
+                    <div  key={index + lang} className="tour__header" style={{maxWidth: "1080px", display: "flex", justifyContent: "center", maxHeight: "726px"}}>
                         <Image style={{}} src={`${Config.serverAdress}${photo.photoPath}`} width={1980} height={726} alt="" />
                     </div>
                 )}
@@ -440,8 +440,8 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
             {appStore.isAdmin ? <input type={"file"} onChange={(e) => uploadImg(e)} placeholder={"Upload file"}></input> : <></>}
 
             <Carousel autoplay>
-                {tourPhotos.map((photo) =>
-                    <div className="tour__header" style={{maxWidth: "1080px", display: "flex", justifyContent: "center", maxHeight: "726px"}}>
+                {tourPhotos.map((photo, index) =>
+                    <div  key={index + lang} className="tour__header" style={{maxWidth: "1080px", display: "flex", justifyContent: "center", maxHeight: "726px"}}>
                         <Image style={{}} src={`${Config.serverAdress}${photo.photoPath}`} width={1980} height={726} alt="" />
                     </div>
                 )}
