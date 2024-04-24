@@ -42,6 +42,8 @@ const Commentary = ({lang, comment, deleteCommentary, getCommentaries, tourid}: 
 
         setIsReplyActive(false);
         setReply("");
+        await appStore.connection.invoke("RefreshComments")
+
     }
 
     const deleteOneCommentary = async (id: string)=> {
@@ -57,6 +59,8 @@ const Commentary = ({lang, comment, deleteCommentary, getCommentaries, tourid}: 
         getCommentaries(tourid);
 
         setIsChangeActive(false);
+        await appStore.connection.invoke("RefreshComments")
+
     }
 
     useEffect(() => {

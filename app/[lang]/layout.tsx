@@ -47,6 +47,12 @@ export default function RootLayout({
             }
         })
 
+        connection.on("RefreshCommentss", () => {
+
+            appStore.setRefreshComments();
+
+        })
+
         try {
             await connection.start();
             await connection.invoke("JoinHub")

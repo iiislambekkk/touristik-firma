@@ -69,6 +69,7 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
         await createComment(newCommRequest);
         await getCommentaries(entityId);
         setNewComm("");
+        await appStore.connection.invoke("RefreshComments")
     }
 
     async function deleteCommentary(id: string) {
@@ -215,6 +216,10 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
         })
     }
 
+    if (appStore.refreshComments >= 1) {
+        getCommentaries(entityId);
+    }
+
 
     for (let i=1; i<= tour.numOfDays; i++) {
 
@@ -319,7 +324,7 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
                 </div>
             </div>
 
-
+            {appStore.refreshComments ? <></> : <></>}
 
             {comments.length == 0 ?  <p>There are no reviews yet...</p> :
                 <Comments tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary}  entityId={entityId} lang={lang} comments={comments}/>
@@ -390,6 +395,7 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
                 </div>
             </div>
 
+            {appStore.refreshComments ? <></> : <></>}
 
             {comments.length == 0 ?  <p>Әлі пікірлер жоқ...</p> :
                 <Comments  tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary}  entityId={entityId} lang={lang} comments={comments}/>
@@ -457,6 +463,7 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
                 </div>
             </div>
 
+            {appStore.refreshComments ? <></> : <></>}
 
             {comments.length == 0 ?  <p>На этот тур пока нет отзывов...</p> :
                 <Comments tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary}  entityId={entityId} lang={lang} comments={comments}/>
