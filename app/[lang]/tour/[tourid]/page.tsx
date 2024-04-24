@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useEffect, useState} from 'react';
-import {getOneTour, getTourPhotos, uploadTourImg} from "@/src/services/tours";
+import {deleteTourImg, getOneTour, getTourPhotos, uploadTourImg} from "@/src/services/tours";
 import {Image} from "antd";
 import {Button, Carousel, Collapse, CollapseProps, message, Typography, Upload, UploadProps} from 'antd';
 import {Config} from "@/config";
@@ -270,6 +270,10 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
         await getTourPics(entityId)
     }
 
+    const deletePhoto = async (id: string)=> {
+        await deleteTourImg(id);
+        getTourPics(entityId);
+    }
 
     if (lang === "en") return (
         <div className={"tour"}>
@@ -293,10 +297,14 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
 
             <Carousel autoplay>
                 {tourPhotos.map((photo, index) =>
+                    <>
+                        <div key={index + lang} className="tour__header" style={{position: "relative"}}>
+                            <Image src={`${Config.serverAdress}${photo.photoPath}`} alt="" />
+                            <button onClick={() => deletePhoto(photo.id)} style={{color: "red", position: "absolute", left: "10px", top: "10px", padding: "4px"}}>Delete</button>
+                        </div>
 
-                    <div key={index + lang} className="tour__header">
-                        <Image style={{}} src={`${Config.serverAdress}${photo.photoPath}`} width={1980} height={726} alt="" />
-                    </div>
+                    </>
+
 
 
                 )}

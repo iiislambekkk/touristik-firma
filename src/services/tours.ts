@@ -100,3 +100,16 @@ export const uploadTourImg = async (f: FormData) => {
 
     return res;
 }
+
+export const deleteTourImg = async (id: string) => {
+
+    let res = await axios.delete(`${Config.serverAdress}api/tourphotos/${id}`, {
+        headers: {
+            'accept': 'application/json',
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            'Content-Type': `text/plain; charset=utf-8;`,
+        }
+    })
+
+    return res;
+}
