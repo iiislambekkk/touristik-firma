@@ -114,7 +114,7 @@ const Commentary = ({lang, comment, deleteCommentary, getCommentaries, tourid}: 
         </div>
 
         {comment.replies && comment.replies.map((reply, index) => (
-            <div  key={index + lang} style={{width: "96%", marginLeft: "4%"}}>
+            <div  key={index + lang + comment.id} style={{width: "96%", marginLeft: "4%"}}>
                 <Commentary tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary} lang={lang} comment={reply} />
             </div>
         ))}

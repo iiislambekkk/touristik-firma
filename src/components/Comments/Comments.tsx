@@ -49,7 +49,7 @@ const Comments = ({lang, comments, entityId, deleteCommentary, getCommentaries, 
     return (
     <div className={styles.comments}>
         {structuredComms.map((comment : Comments, index: number) => (
-            <Commentary tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary} key={index} comment={comment} lang={lang}/>
+            <Commentary tourid={tourid} getCommentaries={getCommentaries} deleteCommentary={deleteCommentary} key={lang + comment.id} comment={comment} lang={lang}/>
         ))}
     </div>
     )
