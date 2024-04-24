@@ -121,10 +121,6 @@ const Tours = ({tours, handleDelete, handleOpen, lang}: Props) => {
                     </div> : <div className={"card__buttons"}>
                         <Button onClick={() => router.push("/ru/tour/" + tour.id)}>Подробнее</Button>
                     </div> }
-
-
-
-
                 </Card>
             ))}
         </div>

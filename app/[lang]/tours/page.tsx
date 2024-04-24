@@ -7,6 +7,7 @@ import Tours from "@/src/components/Tours";
 import Title from "antd/es/typography/Title";
 import CreateUpdateTour, {Mode} from "@/src/components/CreateUpdateTour/CreateUpdateTour";
 import Loader from "@/src/components/Loader/Loader";
+import {appStore} from "@/src/store/appStore";
 
 const ToursPage = ({params}: {params: {lang: string}}) => {
     const defaultValues = {
@@ -31,7 +32,6 @@ const ToursPage = ({params}: {params: {lang: string}}) => {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mode, setMode] = useState(Mode.Create);
-    const [role, setRole] = useState('')
 
     const handleCreateTour = async (request: TourRequest) => {
 
@@ -84,16 +84,12 @@ const ToursPage = ({params}: {params: {lang: string}}) => {
         getTours();
 
 
-        if (localStorage.getItem("role") == "Admin") {
-            setRole("Admin")
-        }
-
 
     }, [])
 
     return (
         <div>
-            { role === "Admin" ? <Button
+            { appStore.isAdmin ? <Button
                     style={{marginTop: "20px"}}
                     onClick={openModal}
                 >

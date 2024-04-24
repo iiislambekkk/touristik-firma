@@ -30,12 +30,6 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
     const tourid = params.tourid;
     let entityId : string = tourid;
 
-    /*const { newMessage, events } = Connector();
-    const [message, setMessage] = useState("initial value");*/
-
-
-
-
     const [tour, setTour] = useState<Tour>({} as Tour);
 
     const [comments, setComments] = useState([] as Comments[]);

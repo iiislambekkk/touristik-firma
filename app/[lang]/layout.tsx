@@ -10,12 +10,10 @@ import {MenuOutlined} from "@ant-design/icons";
 import MyMenu from "@/src/components/MyMenu/MyMenu";
 import MyFooter from "@/src/components/MyFooter";
 import {appStore} from "@/src/store/appStore";
-import {getCurrentUser, getUserInformation} from "@/src/services/user";
-import {toJS} from "mobx";
-import axios from "axios";
+import {getCurrentUser} from "@/src/services/user";
 import {HttpTransportType, HubConnectionBuilder} from "@microsoft/signalr";
 import {Config} from "@/config";
-
+import {redirect} from "next/navigation";
 
 export default function RootLayout({
                                        children, params
@@ -28,6 +26,7 @@ export default function RootLayout({
     const [darkMode, setdarkMode] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [messageApi, contextHolder] = message.useMessage();
+    const [needToRedirect, setNeedToRedirect] = useState(false);
 
     const joinHub = async () => {
         let connection = new HubConnectionBuilder().withUrl(`${Config.serverAdress}hub`,  {
@@ -89,10 +88,13 @@ export default function RootLayout({
             joinHub()
         }
         catch (e) {
-            localStorage.removeItem("token")
+            appStore.setAuth(false)
             console.log(e)
+            localStorage.removeItem("isAuth")
+            localStorage.removeItem("role")
+            localStorage.removeItem("token")
+            setNeedToRedirect(true);
         }
-
     }
 
 
@@ -100,16 +102,20 @@ export default function RootLayout({
     useEffect(  () => {
         if (localStorage.getItem("isDarkMode") === "true") setdarkMode(true);
         else setdarkMode(false);
+        if (needToRedirect) redirect(`login`)
 
         if (localStorage.hasOwnProperty("token")){
             getUser()
+        } else {
+            localStorage.removeItem("isAuth")
+            localStorage.removeItem("role")
         }
 
 
 
 
 
-    }, [lang])
+    }, [lang, needToRedirect])
     
     return (
 
