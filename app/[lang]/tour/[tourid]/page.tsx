@@ -310,9 +310,6 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
                         </div>
 
                     </>
-
-
-
                 )}
             </Carousel>
 
@@ -382,9 +379,13 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
 
             <Carousel autoplay>
                 {tourPhotos.map((photo, index) =>
-                    <div  key={index + lang} className="tour__header" style={{maxWidth: "1080px", display: "flex", justifyContent: "center", maxHeight: "726px"}}>
-                        <Image style={{}} src={`${Config.serverAdress}${photo.photoPath}`} width={1980} height={726} alt="" />
-                    </div>
+                    <>
+                        <div key={index + lang} className="tour__header" style={{position: "relative"}}>
+                            <Image src={`${Config.serverAdress}${photo.photoPath}`} alt="" />
+                            <button onClick={() => deletePhoto(photo.id)} style={{color: "red", position: "absolute", left: "10px", top: "10px", padding: "4px"}}>Delete</button>
+                        </div>
+
+                    </>
                 )}
             </Carousel>
 
@@ -450,9 +451,12 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
 
             <Carousel autoplay>
                 {tourPhotos.map((photo, index) =>
-                    <div  key={index + lang} className="tour__header" style={{maxWidth: "1080px", display: "flex", justifyContent: "center", maxHeight: "726px"}}>
-                        <Image style={{}} src={`${Config.serverAdress}${photo.photoPath}`} width={1980} height={726} alt="" />
-                    </div>
+                    <>
+                        <div key={index + lang} className="tour__header" style={{position: "relative"}}>
+                            <Image src={`${Config.serverAdress}${photo.photoPath}`} alt="" />
+                            <button onClick={() => deletePhoto(photo.id)} style={{color: "red", position: "absolute", left: "10px", top: "10px", padding: "4px"}}>Delete</button>
+                        </div>
+                    </>
                 )}
             </Carousel>
 
