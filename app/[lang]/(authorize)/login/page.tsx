@@ -9,6 +9,8 @@ import {LoginRequest, loginUser} from "@/src/services/auth";
 import * as dictionary from '../authDictionary.json';
 import Loader from "@/src/components/Loader/Loader";
 import {appStore} from "@/src/store/appStore";
+import translate from "google-translate-api-x";
+import axios from "axios";
 
 type FieldType = {
     username?: string;
@@ -27,6 +29,7 @@ const LoginPage = ({params}: {params: {lang: string}}) => {
     const authDict = dict?.[params.lang];
 
     async function loginHandler() {
+
         setLoading(true);
 
         const loginRequest = {

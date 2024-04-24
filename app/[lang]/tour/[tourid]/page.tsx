@@ -267,7 +267,7 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
         fd.set("photoAlt", "Bred Pitt")
 
         let res = await uploadTourImg(fd);
-        console.log(res)
+        await getTourPics(entityId)
     }
 
 

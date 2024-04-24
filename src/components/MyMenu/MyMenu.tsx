@@ -28,7 +28,6 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
     }
 
     const items = [
-        {key: "home",label: <Link  href={`/${lang}`}>{menu?.home}</Link>},
         {key: "tours", label: <Link href={`/${lang}/tours`}>{menu?.tours}</Link>},
         {key: "Theme", label: <Switch checked={localStorage?.getItem("isDarkMode") === "true"} onChange={themeHandler} checkedChildren={menu?.lightMode} unCheckedChildren={menu?.darkMode} />},
         {key: "register", label: <Link href={`/${lang}/register`}>{menu?.register}</Link>},
@@ -59,7 +58,6 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
 
 
     const leftItems = [
-        {key: "home", label: <Link href={`/${lang}`}>{menu?.home}</Link>},
         {key: "tours", label: <Link href={`/${lang}/tours`}>{menu?.tours}</Link>},
     ]
 
@@ -113,11 +111,14 @@ const  MyMenu =  observer(({themeHandler, lang, isMobile, setIsDrawerOpen}: {the
         return (
             <nav className="headerMenuu">
                 <div className="logo">
-                    <img
-                        src={'/logo1.svg'}
-                        width={100}
-                        height={60}
-                        alt="Pic"/>
+                    <Link href={`/${lang}/tours`}>
+                        <img
+                            src={'/logo1.svg'}
+                            width={100}
+                            height={60}
+                            alt="Pic"/>
+                    </Link>
+
                 </div>
                 <Menu
                     className={'headerLeftMenu'}

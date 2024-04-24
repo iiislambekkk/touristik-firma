@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google-cloud/translate": "^8.2.0",
     "@microsoft/signalr": "^8.0.0",
     "antd": "^5.15.1",
     "axios": "^1.6.8",
+    "google-translate-api-x": "^10.6.8",
     "html-react-parser": "^5.1.10",
     "mobx": "^6.12.3",
     "mobx-react-lite": "^4.0.7",
