@@ -49,7 +49,7 @@ export default function RootLayout({
 
         connection.on("RefreshCommentss", () => {
 
-            appStore.setRefreshComments();
+            appStore.setRefreshComments(true);
 
         })
 

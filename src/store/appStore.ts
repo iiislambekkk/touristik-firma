@@ -10,7 +10,7 @@ class AppStore {
     avatarPath: string = "";
     connection: HubConnection = {} as HubConnection;
     isNotifyActive: boolean = false;
-    refreshComments: number = 0;
+    refreshComments: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -24,8 +24,8 @@ class AppStore {
         this.isNotifyActive = isNA;
     }
 
-    setRefreshComments() {
-        this.refreshComments += 1;
+    setRefreshComments(isRefreshNeeded: boolean) {
+        this.refreshComments = isRefreshNeeded;
     }
 
     setAuth(isAuth: boolean) {

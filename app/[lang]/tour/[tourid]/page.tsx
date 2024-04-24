@@ -216,7 +216,8 @@ const Page = observer(({params}: {params: {lang: string, tourid: string}}) => {
         })
     }
 
-    if (appStore.refreshComments >= 1) {
+    if (appStore.refreshComments) {
+        appStore.setRefreshComments(false)
         getCommentaries(entityId);
     }
 
