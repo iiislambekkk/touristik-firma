@@ -16,7 +16,7 @@ export default function RootLayout({
               <title>Bred Tour</title>
               <link rel="icon" href="/favicon.ico"/>
           </head>
-          <body>
+          <body style={{position: "relative"}}>
           {children}
           </body>
           </html>

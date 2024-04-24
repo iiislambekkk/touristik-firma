@@ -128,8 +128,8 @@ export default function RootLayout({
         >
             {contextHolder}
             <App>
-                <Layout style={{minHeight: "100vh", minWidth: "280px"}}>
-                    <Header>
+                <Layout style={{minHeight: "100vh", minWidth: "280px", position: "relative", marginTop: "60px"}}>
+                    <Header  style={{position: "fixed", width: "100%", marginTop: "-60px", zIndex: 10}}>
                         <div className={'drawerButton'}>
                             <MenuOutlined style={{paddingLeft: '10px',fontSize: 32, color: "white",
                                 paddingTop: "16px"
