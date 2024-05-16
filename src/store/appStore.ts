@@ -24,12 +24,12 @@ class AppStore {
         this.isNotifyActive = isNA;
     }
 
-    setRefreshComments(isRefreshNeeded: boolean) {
-        this.refreshComments = isRefreshNeeded;
-    }
-
     setAuth(isAuth: boolean) {
         this.isAuth = isAuth;
+    }
+
+    setRefreshComments(isRefreshNeeded: boolean) {
+        this.refreshComments = isRefreshNeeded;
     }
 
     setUserId(id: string) {

@@ -65,20 +65,7 @@ const CreateUpdateTour = (
 
 
     const handleOnOk = async () => {
-        const daysKzURI = encodeURI(JSON.stringify(daysKz));
-        const daysRuRes = await axios.get("https://translate.googleapis.com/translate_a/single?client=gtx&sl=kk&tl=ru&dt=t&q=" + daysKzURI);
-        const daysRu = JSON.parse(await daysRuRes.data[0][0][0]);
-        const daysEnRes = await axios.get("https://translate.googleapis.com/translate_a/single?client=gtx&sl=kk&tl=en&dt=t&q=" + daysKzURI);
-        const daysEn = JSON.parse(await daysEnRes.data[0][0][0]);
-
-        const descKzURI = encodeURI(descriptionKz);
-        const descriptionRu = (await axios.get("https://translate.googleapis.com/translate_a/single?client=gtx&sl=kk&tl=ru&dt=t&q=" + descKzURI)).data[0][0][0];
-        const descriptionEn = (await axios.get("https://translate.googleapis.com/translate_a/single?client=gtx&sl=kk&tl=En&dt=t&q=" + descKzURI)).data[0][0][0];
-
-        const titleKzURI = encodeURI(titleKz);
-        const titleRu = (await axios.get("https://translate.googleapis.com/translate_a/single?client=gtx&sl=kk&tl=ru&dt=t&q=" + titleKzURI)).data[0][0][0];
-        const titleEn = (await axios.get("https://translate.googleapis.com/translate_a/single?client=gtx&sl=kk&tl=En&dt=t&q=" + titleKzURI)).data[0][0][0];
-
+        
         const tourRequest = {titleEn, titleKz, titleRu, descriptionEn, descriptionKz, descriptionRu, previewPhotoPath, country, price, daysEn:JSON.stringify(daysEn), daysKz: JSON.stringify(daysRu), daysRu: JSON.stringify(daysKz), numOfDays};
 
 
